@@ -409,7 +409,7 @@ function syncAmbientMotion() {
 
 const depthSections = [...document.querySelectorAll(".content-section, .contact-strip")];
 const depthItems = [...document.querySelectorAll(
-  ".service-card, .project-card, .about-quote, .about-numbers, .about-badges a, .known-object-tags span, .contact-details > a",
+  ".service-card, .project-card, .process-step, .about-quote, .about-numbers, .about-badges a, .known-object-tags span, .contact-details > a",
 )];
 let depthFramePending = false;
 
