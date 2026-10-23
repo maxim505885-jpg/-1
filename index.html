@@ -1,172 +1,131 @@
 <!doctype html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#17191c" />
-    <meta name="description" content="СПУ — инженерное обследование зданий и сооружений: инструментальная диагностика, 3D-сканирование, испытания конструкций и технические заключения с рекомендациями." />
-    <title>Инженерное обследование зданий и сооружений — СПУ</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23f1f2f3' d='M5 7h30v6H12v5h17v6H12v9H5z'/%3E%3C/svg%3E" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f1f0eb" />
+    <meta name="description" content="СПУ — техническое обследование зданий и сооружений, экспертиза промышленной безопасности, испытания, 3D-сканирование и проектирование. Инженерная практика с 2000 года." />
+    <title>СПУ — инженерный ответ для вашего объекта</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=spu-engineering-20261024-g" />
-    <script src="script.js?v=spu-engineering-20261024-g" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=spu-conversion-20261024-a" />
+    <script src="script.js?v=spu-conversion-20261024-a" defer></script>
   </head>
   <body>
-    <main>
-      <section class="story" id="top" aria-label="Инженерная среда СПУ">
-        <div class="story-stage">
-          <div class="scene-landscape"></div>
-          <div class="scene-haze"></div>
-          <div class="scene-grid"></div>
-          <div class="scene-vignette"></div>
-          <canvas class="particle-field" aria-hidden="true"></canvas>
-          <div class="scene-specimen" aria-hidden="true">
-            <div class="specimen-orbit orbit-a"></div>
-            <div class="specimen-orbit orbit-b"></div>
-            <img src="assets/spu-core.png" alt="" />
-            <span class="specimen-point point-a"></span><span class="specimen-point point-b"></span><span class="specimen-point point-c"></span>
-          </div>
-          <div class="scene-crosshair" aria-hidden="true"><span></span><span></span></div>
-          <div class="scene-coordinates" aria-hidden="true">47°25′ N&nbsp;&nbsp; 40°06′ E</div>
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="СПУ — на главную"><span class="brand-mark">СПУ<span class="brand-dot">.</span></span><span class="brand-note">ИНЖЕНЕРНЫЕ<br />РЕШЕНИЯ С 2000 ГОДА</span></a>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="#cases">Проекты</a><a href="#services">Направления</a><a href="#approach">Как работаем</a><a href="#about">О СПУ</a>
+      </nav>
+      <a class="header-cta" href="#contact">Обсудить объект <span>↗</span></a>
+    </header>
 
-          <header class="corner-header">
-            <a class="wordmark" href="#top" aria-label="СПУ — наверх">
-              <span class="wordmark-main">СПУ</span>
-              <span class="wordmark-sub">ИНЖЕНЕРНОЕ БЮРО<br />НОВОЧЕРКАССК · 2000</span>
-            </a>
-            <nav class="top-nav" aria-label="Разделы сайта"><a href="#process">ЭТАПЫ</a><a href="#services">УСЛУГИ</a><a href="#portfolio">ОБЪЕКТЫ</a><a href="#about">О КОМПАНИИ</a></nav>
-            <a class="corner-contact" href="#contact">ОБСУДИТЬ ОБЪЕКТ <span>↗</span></a>
+    <main id="main">
+      <section class="film-story" id="top" aria-label="Как СПУ помогает принять решение по объекту">
+        <div class="film-stage">
+          <div class="film-photo" aria-hidden="true"></div>
+          <div class="film-shade" aria-hidden="true"></div>
+          <div class="film-grid" aria-hidden="true"></div>
+          <canvas class="structure-cloud" aria-hidden="true"></canvas>
+          <div class="scan-orbit orbit-one" aria-hidden="true"></div><div class="scan-orbit orbit-two" aria-hidden="true"></div>
+          <div class="scan-marker marker-one" aria-hidden="true"><i></i><span>УЗЕЛ 04 · КОНТРОЛЬ</span></div>
+          <div class="scan-marker marker-two" aria-hidden="true"><i></i><span>ФАКТИЧЕСКАЯ ГЕОМЕТРИЯ</span></div>
+          <header class="film-header">
+            <span class="film-location"><i></i> НОВОЧЕРКАССК · РАБОТАЕМ ПО РОССИИ</span>
+            <a href="tel:+79064541249">+7 (906) 454-12-49 <span>↗</span></a>
           </header>
 
-          <div class="story-frames" aria-live="off">
-            <article class="story-frame frame-hero is-active" data-frame="0">
-              <div class="manifesto"><span class="micro-label">ЧТО ДЕЛАЕТ ИНЖЕНЕР-ОБСЛЕДОВАТЕЛЬ</span><p>Измеряет конструкции, фиксирует дефекты и проверяет, безопасна ли дальнейшая эксплуатация.</p><span class="manifesto-foot">БЕТОН · МЕТАЛЛ · ФУНДАМЕНТЫ · ИНЖЕНЕРНЫЕ СЕТИ</span></div>
-              <div class="hero-caption"><span class="micro-label">СПУ · ИНЖЕНЕРНЫЕ ОБСЛЕДОВАНИЯ С 2000 ГОДА</span><h1>Обследуем<br />здания и<br />сооружения.</h1><p class="hero-description">Определяем фактическое состояние конструкций, выявляем дефекты и готовим техническое заключение с рекомендациями.</p><div class="hero-actions"><a class="hero-action-primary" href="mailto:info@spu-pr.ru?subject=Обследование%20объекта">Обсудить обследование <span>↗</span></a><a class="hero-action-secondary" href="#process">Как проходит работа</a></div></div>
-              <a class="scroll-prompt" href="#directions"><span class="scroll-symbol">↓</span><span>ЛИСТАЙТЕ, ЧТОБЫ<br />ИССЛЕДОВАТЬ</span></a>
-              <span class="hero-edition">ВИЗУАЛИЗАЦИЯ ЛАЗЕРНОГО 3D-СКАНИРОВАНИЯ · ООО «СПУ»</span>
-            </article>
-
-            <article class="story-frame frame-data" data-frame="1">
-              <div class="frame-index"><span>02 / 06</span><span class="micro-label">ОБСЛЕДОВАНИЕ</span></div>
-              <div class="frame-copy copy-left"><span class="micro-label">01 — ДИАГНОСТИКА</span><h2>Сначала<br />нужно <em>измерить.</em></h2><p>Визуально и инструментально обследуем фундаменты, стены, перекрытия, кровли и инженерные сети.</p></div>
-              <div class="scan-visual" aria-label="Схематическая интерактивная визуализация облака точек здания">
-                <canvas class="scan-cloud" aria-hidden="true"></canvas>
-                <span class="scan-label scan-label-top">СХЕМА ОБЛАКА ТОЧЕК <b>XYZ / ММ</b></span>
-                <span class="scan-label scan-label-side">ОБЛАКО ТОЧЕК<br />ФАКТИЧЕСКАЯ ГЕОМЕТРИЯ</span>
-                <span class="scan-caption"><i></i> ЛАЗЕРНОЕ 3D-СКАНИРОВАНИЕ</span>
+          <div class="film-frames" aria-live="off">
+            <article class="film-frame is-active" data-film-frame="0">
+              <div class="hero-copy">
+                <span class="eyebrow"><i></i> ТЕХНИЧЕСКОЕ ОБСЛЕДОВАНИЕ · СПУ</span>
+                <h1>Объект вызывает вопросы?<br /><em>Начните с фактов.</em></h1>
+                <p class="hero-lead">Проверим состояние здания и конструкций, объясним риски и дадим инженерный план дальнейших действий.</p>
+                <div class="hero-actions"><a class="button button-primary" href="#contact">Разобрать задачу с инженером <span>↗</span></a><a class="text-link" href="#cases">Посмотреть реальные проекты <span>↓</span></a></div>
+                <p class="hero-proof">Обследование · расчёты · рекомендации · проектирование</p>
               </div>
+              <div class="hero-visual-caption"><span>ОБСЛЕДОВАНИЕ КОНСТРУКЦИЙ</span><b>01 / 04</b></div>
+              <div class="hero-image-note">ВИЗУАЛИЗАЦИЯ ИНЖЕНЕРНОГО ОБСЛЕДОВАНИЯ</div>
             </article>
 
-            <article class="story-frame frame-method" data-frame="2">
-              <div class="frame-index"><span>03 / 06</span><span class="micro-label">ЗАКЛЮЧЕНИЕ И РЕШЕНИЕ</span></div>
-              <div class="frame-copy copy-right"><span class="micro-label">02 — ОТ ДИАГНОСТИКИ К ДЕЙСТВИЮ</span><h2>От фактов<br />к <em>решению.</em></h2><p>Готовим технические заключения, оцениваем несущую способность и разрабатываем решения по усилению и реконструкции.</p></div>
-              <div class="method-tags"><span>ОБСЛЕДОВАНИЕ</span><span>ЭКСПЕРТИЗА ПРОМБЕЗОПАСНОСТИ</span><span>ЛАБОРАТОРНЫЕ ИСПЫТАНИЯ</span><span>3D-СКАНИРОВАНИЕ</span><span>МОНИТОРИНГ</span><span>ПРОЕКТИРОВАНИЕ</span></div>
-              <div class="frame-readout readout-left"><span>ПОЛНЫЙ ЦИКЛ</span><b>ОБСЛЕДОВАНИЕ → РЕКОМЕНДАЦИИ</b></div>
+            <article class="film-frame" data-film-frame="1">
+              <div class="story-copy story-copy-left"><span class="eyebrow"><i></i> 01 — НАЙТИ ПРИЧИНУ</span><h2>Трещина — это симптом.<br /><em>Важно понять, почему.</em></h2><p>Фиксируем дефекты, измеряем конструкции и сопоставляем данные с проектной документацией.</p><div class="story-specs"><span>01 <b>Обмеры</b></span><span>02 <b>Инструментальный контроль</b></span><span>03 <b>Облако точек</b></span></div></div>
+              <div class="story-side-label">СХЕМА ЦИФРОВОГО СКАНИРОВАНИЯ · НЕ МОДЕЛЬ КОНКРЕТНОГО ОБЪЕКТА</div>
+              <div class="story-index">ДИАГНОСТИКА <b>01—03</b></div>
             </article>
 
-            <article class="story-frame frame-projects" data-frame="3">
-              <div class="frame-index"><span>04 / 06</span><span class="micro-label">РЕАЛЬНЫЕ ОБЪЕКТЫ</span></div>
-              <div class="frame-copy copy-left"><span class="micro-label">03 — ПРАКТИКА СПУ</span><h2>Сложные задачи.<br /><em>Измеримый результат.</em></h2><p>Промышленные площадки, жилые здания, инженерные сооружения и объекты культурного наследия.</p></div>
-              <div class="object-list" aria-label="Примеры выполненных проектов">
-                <a href="https://spu-pr.org/nashi-obekty/3d-skanirovanie-zdanij-sooruzhenij/dk-himikov-g.-severodoneck/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/26-02-2025/uz19h5-23_391x258_6b1.png" alt="ДК Химиков — объект лазерного 3D-сканирования" loading="lazy" /><span class="object-meta"><strong>ДК Химиков · Северодонецк</strong><small>Обмеры и лазерное 3D-сканирование конструкций</small></span><i>↗</i></a>
-                <a href="https://spu-pr.org/nashi-obekty/3d-skanirovanie-zdanij-sooruzhenij/zdanie-dvuhetazhnogo-obschestvenno-torgovogo-kompleksa-g.-taganrog/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/26-02-2025/nuqdlm-22_391x258_6b1.png" alt="3D-модель двухэтажного общественно-торгового здания в Таганроге" loading="lazy" /><span class="object-meta"><strong>Общественный комплекс · Таганрог</strong><small>3D-модель, оценка состояния и рекомендации</small></span><i>↗</i></a>
-                <a href="https://spu-pr.org/nashi-obekty/3d-skanirovanie-zdanij-sooruzhenij/yahromskaya-pojma-moskovskaya-oblast/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/26-02-2025/wxq42i-28_391x258_6b1.png" alt="Инженерная 3D-модель объекта в Яхромской пойме" loading="lazy" /><span class="object-meta"><strong>Яхромская пойма · Московская область</strong><small>3D-модель фактической геометрии конструкций</small></span><i>↗</i></a>
-              </div>
+            <article class="film-frame" data-film-frame="2">
+              <div class="report-visual" aria-hidden="true"><div class="report-top"><span>СПУ / ТЕХНИЧЕСКОЕ ЗАКЛЮЧЕНИЕ</span><span>ОБЪЕКТ · 2026</span></div><div class="report-title"><span>СОСТОЯНИЕ КОНСТРУКЦИЙ</span><b>Оценка и рекомендации</b></div><div class="report-lines"><i></i><i></i><i></i><i></i></div><div class="report-findings"><span><b>01</b> Дефекты и причины</span><span><b>02</b> Расчётная проверка</span><span><b>03</b> Следующий шаг</span></div><div class="report-stamp">ИНЖЕНЕРНЫЙ<br />АНАЛИЗ</div></div>
+              <div class="story-copy story-copy-right"><span class="eyebrow"><i></i> 02 — ПОНЯТЬ, ЧТО ЭТО ЗНАЧИТ</span><h2>Не просто список дефектов.<br /><em>Понятный ответ: что дальше?</em></h2><p>Техническое заключение связывает результаты обследования с решениями по эксплуатации, ремонту, усилению или реконструкции.</p></div>
+              <div class="story-index">ЗАКЛЮЧЕНИЕ <b>02—03</b></div>
             </article>
 
-            <article class="story-frame frame-experience" data-frame="4">
-              <div class="frame-index"><span>05 / 06</span><span class="micro-label">ОПЫТ СПУ</span></div>
-              <div class="frame-copy copy-right"><span class="micro-label">04 — ИНЖЕНЕРНАЯ ПРАКТИКА С 2000 ГОДА</span><h2>Выводы,<br />подтверждённые<br /><em>расчётами.</em></h2><p>Собственная лаборатория неразрушающего контроля и специалисты, которые работают с объектами по всей России.</p></div>
-              <div class="experience-readouts"><div><strong>2000</strong><small>ГОД ОСНОВАНИЯ СПУ</small></div><div><strong>2 300<span>+</span></strong><small>ОБЪЕКТОВ В ПОРТФЕЛЕ</small></div><div><strong>8</strong><small>НАПРАВЛЕНИЙ РАБОТЫ</small></div></div>
-            </article>
-
-            <article class="story-frame frame-contact" data-frame="5" id="contact-frame">
-              <div class="frame-index"><span>06 / 06</span><span class="micro-label">ОБСУДИМ ВАШ ОБЪЕКТ</span></div>
-              <div class="contact-block"><span class="micro-label">ОБСЛЕДОВАНИЕ · ЭКСПЕРТИЗА · ПРОЕКТИРОВАНИЕ</span><h2>Нужно оценить<br /><em>состояние объекта?</em></h2><p>Пришлите адрес и имеющиеся материалы — специалист СПУ подскажет, с чего начать обследование.</p><a class="contact-action" href="mailto:info@spu-pr.ru?subject=Обсуждение%20объекта">ОБСУДИТЬ ОБЪЕКТ <span>↗</span></a><a class="contact-phone" href="tel:+79064541249">+7 (906) 454-12-49</a></div>
-              <div class="contact-address">КРУПСКОЙ, 76<br />НОВОЧЕРКАССК · РОССИЯ<br />INFO@SPU-PR.RU</div>
+            <article class="film-frame" data-film-frame="3">
+              <div class="story-copy story-copy-left story-copy-final"><span class="eyebrow"><i></i> 03 — ПРИНЯТЬ РЕШЕНИЕ</span><h2>Когда выводы подтверждены,<br /><em>можно двигаться дальше.</em></h2><p>СПУ объединяет обследования, экспертизу, лабораторные испытания, расчёты и проектирование.</p><a class="button button-primary" href="#contact">Обсудить свой объект <span>↗</span></a></div>
+              <div class="film-proof-card"><span>ИНЖЕНЕРНАЯ ПРАКТИКА</span><strong>2 300<sup>+</sup></strong><p>объектов в портфеле<br />с 2000 года</p><div class="proof-rule"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>8 НАПРАВЛЕНИЙ РАБОТЫ</small></div>
+              <div class="story-index">РЕЗУЛЬТАТ <b>03—03</b></div>
             </article>
           </div>
-
-          <div class="scene-ui">
-            <div class="scene-status" role="status" aria-live="polite" aria-atomic="true"><span class="status-light"></span><span data-scene-name>ТЕХНИЧЕСКОЕ ОБСЛЕДОВАНИЕ СПУ</span></div>
-            <div class="scene-progress" aria-hidden="true"><span></span></div>
-            <span class="scene-counter"><b data-current-frame>01</b> <i>/</i> 06</span>
-          </div>
-        </div>
-        <div class="story-anchor" id="directions"></div>
-        <div class="story-anchor project-anchor" id="projects"></div>
-        <div class="story-anchor contact-anchor" id="contact"></div>
-      </section>
-
-      <section class="content-section process-section" id="process" aria-labelledby="process-title">
-        <div class="content-wrap">
-          <div class="section-heading process-heading"><div><span class="section-kicker">ПОНЯТНЫЙ ПЛАН РАБОТ</span><h2 id="process-title">От первого осмотра<br /><em>до технического заключения.</em></h2></div><p>Сначала разбираемся в задаче объекта, затем собираем фактические данные и объясняем, что с ними делать.</p></div>
-          <div class="process-grid">
-            <article class="process-step"><span class="process-no">01 / ЗАПРОС</span><h3>Уточняем задачу</h3><p>Обсуждаем объект, причину обследования и имеющуюся документацию. Определяем нужный состав работ.</p></article>
-            <article class="process-step"><span class="process-no">02 / ОБЪЕКТ</span><h3>Осматриваем и измеряем</h3><p>Фиксируем конструкции и дефекты. При необходимости проводим инструментальные замеры, испытания и 3D-сканирование.</p></article>
-            <article class="process-step"><span class="process-no">03 / АНАЛИЗ</span><h3>Проверяем данные</h3><p>Сопоставляем результаты обследования с проектными материалами, оцениваем состояние и выполняем расчёты.</p></article>
-            <article class="process-step"><span class="process-no">04 / РЕЗУЛЬТАТ</span><h3>Даём рекомендации</h3><p>Передаём техническое заключение: выводы о состоянии конструкций и рекомендации по дальнейшим действиям.</p></article>
-          </div>
-          <div class="deliverable-row"><span>ЧТО ПОЛУЧАЕТ ЗАКАЗЧИК</span><strong>Техническое заключение</strong><i></i><strong>Дефектная ведомость</strong><i></i><strong>Рекомендации по ремонту, усилению или эксплуатации</strong></div>
+          <div class="film-controls"><span class="film-current"><b data-film-current>01</b><i>/</i>04</span><div class="film-progress"><span></span></div><span class="film-hint">ЛИСТАЙТЕ, ЧТОБЫ ПРОДОЛЖИТЬ <b>↓</b></span></div>
         </div>
       </section>
 
-      <section class="content-section services-section" id="services" aria-labelledby="services-title">
-        <div class="content-wrap">
-          <div class="section-heading"><div><span class="section-kicker">01 / НАПРАВЛЕНИЯ ДЕЯТЕЛЬНОСТИ</span><h2 id="services-title">Инженерный цикл<br /><em>от обследования до проекта.</em></h2></div><p>СПУ объединяет экспертное, проектное, расчётное и лабораторное направления. Это позволяет связать данные обследования с конкретными решениями для объекта.</p></div>
-          <div class="service-grid">
-            <article class="service-card"><span class="service-no">01</span><div><h3>Техническое обследование</h3><p>Собираем данные о фактическом состоянии здания и его конструкций.</p><ul><li>Визуальное и инструментальное обследование</li><li>Фундаменты, грунты, полы, перекрытия, крыши</li><li>Инженерные сети, очистные сооружения, скважины</li><li>Тепловизионное и энергетическое обследование</li><li>Комплексные обследования и сопровождение экспертизы</li></ul></div><span class="service-mark">⌖</span></article>
-            <article class="service-card"><span class="service-no">02</span><div><h3>Промышленная безопасность</h3><p>Экспертиза промышленной безопасности зданий, сооружений и технических устройств.</p><ul><li>Здания, строительные конструкции и производственные объекты</li><li>Технические устройства: направления Э7, Э11, Э12, Э13, Э14.4</li><li>Газопроводы, котлы, сосуды и грузоподъёмные механизмы</li></ul></div><span class="service-mark">◉</span></article>
-            <article class="service-card"><span class="service-no">03</span><div><h3>Испытания и лаборатория</h3><p>Проверяем материалы и конструкции неразрушающими и нагрузочными методами.</p><ul><li>Контроль бетона и сварных соединений</li><li>Определение длины и сплошности свай</li><li>Вибродинамические испытания</li><li>Статические испытания конструкций</li></ul></div><span class="service-mark">⌁</span></article>
-            <article class="service-card"><span class="service-no">04</span><div><h3>3D-сканирование и обмеры</h3><p>Фиксируем фактическую геометрию сооружений в измеримой цифровой форме.</p><ul><li>Лазерное сканирование зданий и помещений</li><li>3D-модели и ортофотопланы</li><li>Подсчёт объёмов сыпучих материалов</li><li>Топографическая съёмка фотограмметрией</li></ul></div><span class="service-mark">◌</span></article>
-            <article class="service-card"><span class="service-no">05</span><div><h3>Проектирование</h3><p>Разрабатываем решения для нового строительства, ремонта и реконструкции.</p><ul><li>Архитектурно-строительное проектирование</li><li>Жилые и общественные здания</li><li>Капитальный ремонт и реконструкция</li><li>Усиление и восстановление конструкций</li></ul></div><span class="service-mark">⌗</span></article>
-            <article class="service-card"><span class="service-no">06</span><div><h3>Объекты культурного наследия</h3><p>Готовим научно-проектную документацию для сохранения исторических объектов.</p><ul><li>Обследование объектов культурного наследия</li><li>Реставрация и текущий ремонт</li><li>Приспособление для современного использования</li></ul></div><span class="service-mark">⌂</span></article>
-            <article class="service-card"><span class="service-no">07</span><div><h3>Мониторинг</h3><p>Отслеживаем изменения конструкций во время строительства и эксплуатации.</p><ul><li>Строящиеся здания и окружающая застройка</li><li>Динамические параметры: частота и декремент</li><li>Развитие трещин по маякам и датчикам</li><li>Геодезический мониторинг</li></ul></div><span class="service-mark">⌁</span></article>
-            <article class="service-card"><span class="service-no">08</span><div><h3>Расчёты конструкций</h3><p>Проверяем несущую способность и обосновываем технические решения.</p><ul><li>Жилые и общественные здания</li><li>Промышленные и сельскохозяйственные сооружения</li><li>Оценка фактического состояния и вариантов усиления</li></ul></div><span class="service-mark">∑</span></article>
+      <section class="trust-band" aria-label="Факты о СПУ"><div><b>С 2000</b><span>года в инженерной практике</span></div><div><b>2 300+</b><span>объектов в портфеле</span></div><div><b>8</b><span>направлений работы</span></div><div><b>РФ +</b><span>ближнее зарубежье</span></div></section>
+
+      <section class="section needs-section" id="needs" aria-labelledby="needs-title">
+        <div class="section-shell">
+          <div class="section-intro"><span class="section-label">НАЧНИТЕ С ВАШЕЙ СИТУАЦИИ</span><span class="section-count">01 / ПОДБОР РАБОТ</span></div>
+          <div class="needs-layout"><div><h2 id="needs-title">Что происходит<br />с вашим объектом?</h2><p class="section-deck">Выберите задачу — покажем, с чего обычно начинают и какие данные помогают инженеру разобраться.</p><div class="need-tabs" role="tablist" aria-label="Выберите задачу объекта"><button type="button" role="tab" id="need-tab-1" aria-selected="true" aria-controls="need-panel" data-need="rebuild">Планируется реконструкция</button><button type="button" role="tab" id="need-tab-2" aria-selected="false" aria-controls="need-panel" data-need="defect">Появились трещины или деформации</button><button type="button" role="tab" id="need-tab-3" aria-selected="false" aria-controls="need-panel" data-need="industrial">Нужна экспертиза для промобъекта</button><button type="button" role="tab" id="need-tab-4" aria-selected="false" aria-controls="need-panel" data-need="scan">Нужны точные обмеры / 3D-модель</button></div></div>
+            <article class="need-answer" id="need-panel" role="tabpanel" aria-labelledby="need-tab-1" tabindex="0"><span class="answer-kicker" data-answer-kicker>ПЕРЕД РЕКОНСТРУКЦИЕЙ</span><h3 data-answer-title>Сначала — понять фактическое состояние.</h3><p data-answer-copy>Обследование помогает сопоставить реальное состояние конструкций с планами реконструкции и определить, какие решения нужны дальше.</p><div class="answer-services" data-answer-services><span>Техническое обследование</span><span>Расчёт конструкций</span><span>Проектирование усиления</span></div><a class="answer-cta" data-answer-cta href="mailto:info@spu-pr.ru?subject=Обследование%20перед%20реконструкцией">Обсудить эту задачу <b>↗</b></a><small>Полезно приложить адрес объекта, фото и имеющиеся чертежи.</small><div class="answer-orbit" aria-hidden="true"></div></article>
           </div>
-          <div class="service-note"><span class="pulse-dot"></span> ОБЪЕКТЫ ПО ВСЕЙ РОССИИ И БЛИЖНЕМУ ЗАРУБЕЖЬЮ <a href="https://spu-pr.org/" target="_blank" rel="noreferrer">ВСЕ УСЛУГИ НА SPU-PR.ORG ↗</a></div>
         </div>
       </section>
 
-      <section class="content-section portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
-        <div class="content-wrap">
-          <div class="section-heading portfolio-heading"><div><span class="section-kicker">02 / ИЗБРАННЫЕ ОБЪЕКТЫ</span><h2 id="portfolio-title">Работа, которую<br /><em>можно увидеть.</em></h2></div><p>Промышленные предприятия, жилые дома, инженерные сооружения и культурные объекты. Ниже — проекты, опубликованные СПУ.</p></div>
-          <div class="portfolio-tools"><div class="portfolio-filters" role="group" aria-label="Фильтр объектов по направлению"><button type="button" data-project-filter="all" aria-pressed="true">Все работы</button><button type="button" data-project-filter="inspection" aria-pressed="false">Обследования</button><button type="button" data-project-filter="epb" aria-pressed="false">Промышленная безопасность</button><button type="button" data-project-filter="scan" aria-pressed="false">3D-сканирование</button><button type="button" data-project-filter="design" aria-pressed="false">Проектирование и испытания</button></div><p class="portfolio-count" data-project-count aria-live="polite">Показано 17 проектов</p></div>
-          <div class="portfolio-grid">
-            <a class="project-card project-card-large" href="https://spu-pr.org/nashi-obekty/ekspertiza-promyshlennoj-bezopasnosti/kompleks-rabot-na-kolomenskom-zavode/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/9qszel-123_690x387_7b9.jpg" alt="Промышленный объект — комплекс работ на Коломенском заводе" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ПРОМЫШЛЕННОСТЬ · ЭПБ</span><span class="project-info"><strong>Коломенский завод</strong><small>Экспертиза цехов и технических устройств: подъёмные механизмы, газопроводы, котлы и сосуды.</small><i>МОСКОВСКАЯ ОБЛАСТЬ · КОЛОМНА　↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/rekonstrukciya-ochistnyh-sooruzhenij-v-g.-novorossijsk/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/5nihtf-231_690x387_7b9.jpg" alt="Очистные сооружения — проект обследования 36 строений" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ОБСЛЕДОВАНИЕ · 36 ЗДАНИЙ</span><span class="project-info"><strong>Очистные сооружения</strong><small>Сплошное инструментальное обследование перед разработкой проекта реконструкции.</small><i>КРАСНОДАРСКИЙ КРАЙ · НОВОРОССИЙСК ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/ekspertiza-promyshlennoj-bezopasnosti/kompleks-rabot-na-zavode-nevz-v-g.-novocherkassk/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/abtnzq-112_690x387_7b9.jpg" alt="Промышленные корпуса завода НЭВЗ" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ЭПБ · ЖЕЛЕЗНОДОРОЖНОЕ ПРОИЗВОДСТВО</span><span class="project-info"><strong>Завод НЭВЗ</strong><small>Экспертиза цехов и обследование подкрановых путей.</small><i>НОВОЧЕРКАССК ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/voenno-istoricheskij-muzejnyj-kompleks-sambekskie-vysoty/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/dyaw3e-332_690x387_7b9.jpg" alt="Военно-исторический музейный комплекс Самбекские высоты" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">КУЛЬТУРНЫЙ ОБЪЕКТ</span><span class="project-info"><strong>Самбекские высоты</strong><small>Техническое обследование и поверочные расчёты для подтверждения безопасной эксплуатации.</small><i>РОСТОВСКАЯ ОБЛАСТЬ ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/obsledovanie-mzhd-(50-domov)-v-g.-mahachkala-na-osnovanii-rasporyazheniya-pravitelstva-rf-no-2850-r-ot-29-noyabrya-2019-goda/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/5zctxd-232_690x387_7b9.jpg" alt="Многоквартирные жилые дома в Махачкале" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ЖИЛОЙ ФОНД · 50 ДОМОВ</span><span class="project-info"><strong>Жилые дома Махачкалы</strong><small>Инструментальное обследование многоквартирных домов по распоряжению Правительства РФ № 2850-р.</small><i>РЕСПУБЛИКА ДАГЕСТАН ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/obsledovanie-zhilyh-domov-(308-sht.)-v-g.-ryazan-soglasno-programme-kap.-remonta/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/mz836b-222_690x387_7b9.jpg" alt="Жилые дома в Рязани по программе капитального ремонта" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ЖИЛОЙ ФОНД · 308 ДОМОВ</span><span class="project-info"><strong>Жилые дома Рязани</strong><small>Инструментальное обследование многоквартирных домов и объектов в области.</small><i>РЯЗАНСКАЯ ОБЛАСТЬ ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/obsledovanie-proizvodstvennyh-zdanij-v-g.-magadan/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/fqik2u-111_690x387_7b9.jpg" alt="Производственные здания в Магадане" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ПРОИЗВОДСТВО · РЕКОНСТРУКЦИЯ</span><span class="project-info"><strong>Производственные здания</strong><small>Полное инструментальное обследование для определения возможности реконструкции.</small><i>МАГАДАН ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/0l57o1-333_690x387_7b9.jpg" alt="Обследование многоквартирного дома в городе Шахты" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">АВАРИЙНАЯ ЭКСПЕРТИЗА</span><span class="project-info"><strong>Дом после взрыва газа</strong><small>Работа экспертов комиссии по оценке технического состояния зданий после происшествия.</small><i>ШАХТЫ · РОСТОВСКАЯ ОБЛАСТЬ ↗</i></span></a>
-            <a class="project-card project-card-large" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/avtomobilnyj-most-volgograd-kamensk-shahtinskij/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/22-01-2021/5tz6ek-1095c2-2322_690x387_7b9.jpg" alt="Автомобильный мост Волгоград — Каменск-Шахтинский" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ТРАНСПОРТНАЯ ИНФРАСТРУКТУРА · ИСПЫТАНИЯ</span><span class="project-info"><strong>Автомобильный мост</strong><small>Обследование, водолазные работы, 3D-модель и статические и динамические испытания.</small><i>БЕЛАЯ КАЛИТВА · РОСТОВСКАЯ ОБЛАСТЬ ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/ekspertiza-promyshlennoj-bezopasnosti/kompleks-rabot-na-zavode-bezhickaya-stal-v-g.-bryansk/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/05-07-2020/3qeotf-123_690x387_7b9.jpg" alt="Металлургический завод Бежицкая сталь" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ЭПБ · МЕТАЛЛУРГИЯ</span><span class="project-info"><strong>Бежицкая сталь</strong><small>Экспертиза цехов, дымовых труб, металлургического оборудования и подкрановых путей.</small><i>БРЯНСК ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/05-07-2020/78qyct-312_690x387_7b9.jpg" alt="Тверской вагоностроительный завод" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ЭПБ · МАШИНОСТРОЕНИЕ</span><span class="project-info"><strong>Тверской вагоностроительный завод</strong><small>Экспертиза цехов, котлов, газопроводов и грузоподъёмного оборудования.</small><i>ТВЕРЬ ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/zernovoj-terminalnyj-kompleks-kompanii-louis-dreyfus-commodities/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/ktdwqp-444_690x387_7b9.jpg" alt="Зерновой терминальный комплекс" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">АГРОПРОМЫШЛЕННОСТЬ · РЕКОНСТРУКЦИЯ</span><span class="project-info"><strong>Зерновой терминал</strong><small>Обследование объектов незавершённого строительства и подготовка программы реконструкции.</small><i>АЗОВСКИЙ РАЙОН ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/31-05-2020/5j61la-y9uihnkvobdmwuhf-jbyf8r-33221_690x387_7b9.jpg" alt="Производственные здания завода Трансмаш в Энгельсе" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">ЭПБ · ПРОЕКТИРОВАНИЕ</span><span class="project-info"><strong>Завод «Трансмаш»</strong><small>Экспертиза производственных цехов и проект капитального ремонта главного корпуса.</small><i>ЭНГЕЛЬС · САРАТОВСКАЯ ОБЛАСТЬ ↗</i></span></a>
-            <a class="project-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/rekonstrukciya-trenirovochnoj-ploschadki-stadion-torperdo/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/k950sn-2231_690x387_7b9.jpg" alt="Стадион Торпедо в Таганроге" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">СПОРТИВНАЯ ИНФРАСТРУКТУРА</span><span class="project-info"><strong>Стадион «Торпедо»</strong><small>Комплексное инструментальное обследование при реконструкции трибун, мачт и сооружений.</small><i>ТАГАНРОГ · РОСТОВСКАЯ ОБЛАСТЬ ↗</i></span></a>
-            <a class="project-card project-card-scan" href="https://spu-pr.org/nashi-obekty/3d-skanirovanie-zdanij-sooruzhenij/dk-himikov-g.-severodoneck/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/26-02-2025/uz19h5-23_391x258_6b1.png" alt="ДК Химиков в Северодонецке — лазерное сканирование" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">3D-СКАНИРОВАНИЕ · 2025</span><span class="project-info"><strong>ДК Химиков</strong><small>Обмерные работы лазерным сканированием доступных участков конструкций.</small><i>СЕВЕРОДОНЕЦК ↗</i></span></a>
-            <a class="project-card project-card-scan" href="https://spu-pr.org/nashi-obekty/3d-skanirovanie-zdanij-sooruzhenij/zdanie-dvuhetazhnogo-obschestvenno-torgovogo-kompleksa-g.-taganrog/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/26-02-2025/nuqdlm-22_391x258_6b1.png" alt="Общественно-торговый комплекс в Таганроге — 3D-модель" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">3D-МОДЕЛЬ · 2025</span><span class="project-info"><strong>Общественный комплекс</strong><small>Модель фактического состояния, выявление дефектов и рекомендации по эксплуатации.</small><i>ТАГАНРОГ ↗</i></span></a>
-            <a class="project-card project-card-scan" href="https://spu-pr.org/nashi-obekty/3d-skanirovanie-zdanij-sooruzhenij/yahromskaya-pojma-moskovskaya-oblast/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/26-02-2025/wxq42i-28_391x258_6b1.png" alt="Яхромская пойма — фактическая 3D-модель конструкций" loading="lazy" decoding="async" /><span class="project-shade"></span><span class="project-tag">3D-МОДЕЛЬ · 2024</span><span class="project-info"><strong>Яхромская пойма</strong><small>Создание 3D-модели конструкций объекта в Московской области.</small><i>МОСКОВСКАЯ ОБЛАСТЬ ↗</i></span></a>
+      <section class="section cases-section" id="cases" aria-labelledby="cases-title">
+        <div class="section-shell">
+          <div class="section-intro"><span class="section-label">ОПЫТ НА РЕАЛЬНЫХ ОБЪЕКТАХ</span><span class="section-count">02 / ВЫБРАННЫЕ ПРОЕКТЫ</span></div>
+          <div class="section-heading"><h2 id="cases-title">Сложность объекта<br /><em>видна в деталях.</em></h2><p class="section-deck">Промышленные площадки, очистные сооружения, жилой фонд и культурные объекты. Посмотрите, с какими задачами работала команда СПУ.</p></div>
+          <div class="case-grid">
+            <a class="case-card case-feature" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/rekonstrukciya-ochistnyh-sooruzhenij-v-g.-novorossijsk/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/5nihtf-231_690x387_7b9.jpg" alt="Очистные сооружения в Новороссийске" loading="lazy" decoding="async" /><span class="case-shade"></span><span class="case-number">01 / ОБСЛЕДОВАНИЕ</span><span class="case-copy"><small>НОВОРОССИЙСК · КОМПЛЕКС ОЧИСТНЫХ СООРУЖЕНИЙ</small><strong>36 строений.<br />Один план реконструкции.</strong><span>Сплошное инструментальное обследование конструкций перед проектированием реконструкции.</span><b>ЧИТАТЬ О ПРОЕКТЕ ↗</b></span></a>
+            <a class="case-card" href="https://spu-pr.org/nashi-obekty/ekspertiza-promyshlennoj-bezopasnosti/kompleks-rabot-na-kolomenskom-zavode/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/9qszel-123_690x387_7b9.jpg" alt="Производственные корпуса Коломенского завода" loading="lazy" decoding="async" /><span class="case-shade"></span><span class="case-number">02 / ПРОМЫШЛЕННАЯ БЕЗОПАСНОСТЬ</span><span class="case-copy"><small>КОЛОМНА · ПРОИЗВОДСТВЕННЫЙ КОМПЛЕКС</small><strong>Цеха и технические устройства</strong><span>Экспертиза зданий, грузоподъёмных механизмов, газопроводов и оборудования.</span><b>ЧИТАТЬ О ПРОЕКТЕ ↗</b></span></a>
+            <a class="case-card" href="https://spu-pr.org/nashi-obekty/tehnicheskoe-obsledovanie-stroitelnyh-konstrukcij-zdanij-i-sooruzhenij/voenno-istoricheskij-muzejnyj-kompleks-sambekskie-vysoty/" target="_blank" rel="noreferrer"><img src="https://spu-pr.org/assets/cache_image/25-05-2020/dyaw3e-332_690x387_7b9.jpg" alt="Музейный комплекс Самбекские высоты" loading="lazy" decoding="async" /><span class="case-shade"></span><span class="case-number">03 / КУЛЬТУРНЫЙ ОБЪЕКТ</span><span class="case-copy"><small>РОСТОВСКАЯ ОБЛАСТЬ · САМБЕКСКИЕ ВЫСОТЫ</small><strong>Обследование и поверочные расчёты</strong><span>Инструментальные исследования для подтверждения возможности безопасной эксплуатации.</span><b>ЧИТАТЬ О ПРОЕКТЕ ↗</b></span></a>
           </div>
-          <div class="portfolio-source"><span>17 ПРОЕКТОВ · ИЗБРАННЫЕ ПУБЛИКАЦИИ СПУ</span><a href="https://spu-pr.org/nashi-obekty/" target="_blank" rel="noreferrer">ОТКРЫТЬ ПОЛНЫЙ КАТАЛОГ ОБЪЕКТОВ ↗</a></div>
+          <a class="all-projects" href="https://spu-pr.org/nashi-obekty/" target="_blank" rel="noreferrer">Все объекты на официальном сайте <span>↗</span></a>
         </div>
       </section>
 
-      <section class="content-section about-section" id="about" aria-labelledby="about-title">
-        <div class="content-wrap">
-          <div class="section-heading about-heading"><div><span class="section-kicker">03 / О КОМПАНИИ</span><h2 id="about-title">Инженерная практика<br /><em>с декабря 2000 года.</em></h2></div><p>ООО «Строительно-производственное управление» создано в Новочеркасске специалистами и выпускниками Южно-Российского государственного технического университета. Компания занимается проектно-изыскательскими работами.</p></div>
-          <div class="about-layout"><div class="about-story"><div class="about-quote">«Трудных задач много.<br /><em>Нерешаемых задач мы не встречали.</em>»<span>АНАТОЛИЙ СУББОТИН · ГЕНЕРАЛЬНЫЙ ДИРЕКТОР</span></div><p>Ведущие специалисты СПУ участвуют в работе профессиональных объединений по механике грунтов, геотехнике, фундаментостроению и геосинтетике. Проектная, расчётная, экспертная и лабораторная команды работают вместе над задачей объекта. Специалисты проходят профильную переподготовку и сертификацию; на базе компании проходят практику студенты строительного факультета ЮРГТУ (НПИ).</p><div class="known-objects"><span class="section-kicker">СРЕДИ ИЗВЕСТНЫХ ОБЪЕКТОВ СПУ</span><div class="known-object-tags"><span>Заводы «ТрансМашХолдинга»</span><span>Жилые дома группы ПИК</span><span>Магазины «Магнит»</span><span>Торговые центры IKEA</span><span>«Красный Гидропресс»</span><span>Завод «Амилко»</span><span>НИИ медицинской приматологии</span><span>Стадион «Торпедо»</span><span>Очистные сооружения «Южные»</span><span>Северный причал Ростова</span><span>Корпуса ЮРГПУ (НПИ)</span></div></div><div class="about-badges"><a href="https://spu-pr.org/assets/upload/licence-1.pdf" target="_blank" rel="noreferrer">АТТЕСТАТ СТРОИТЕЛЬНОЙ ЛАБОРАТОРИИ ↗</a><a href="https://spu-pr.org/assets/upload/licence-2.pdf" target="_blank" rel="noreferrer">ЛИЦЕНЗИЯ ЭКСПЕРТИЗЫ ПРОМБЕЗОПАСНОСТИ ↗</a><a href="https://spu-pr.org/assets/upload/licence-5.pdf" target="_blank" rel="noreferrer">ЛИЦЕНЗИЯ ПО ОБЪЕКТАМ КУЛЬТУРНОГО НАСЛЕДИЯ ↗</a><a href="https://spu-pr.org/assets/upload/licence-4.pdf" target="_blank" rel="noreferrer">ВЫПИСКА СРО · ПРОЕКТИРОВАНИЕ ↗</a><a href="https://spu-pr.org/assets/upload/licence-3.pdf" target="_blank" rel="noreferrer">ВЫПИСКА СРО · ИЗЫСКАНИЯ ↗</a><a href="https://spu-pr.org/assets/upload/licence-6.zip" target="_blank" rel="noreferrer">УДОСТОВЕРЕНИЯ СПЕЦИАЛИСТОВ ↗</a></div></div><div class="about-numbers"><span class="section-kicker">ПУБЛИЧНЫЕ ИТОГИ ЗА 2019—2024 ГОДЫ</span><div class="stat-row"><strong>772</strong><span>экспертизы промышленной безопасности</span></div><div class="stat-row"><strong>989</strong><span>инструментальных обследований зданий и сооружений</span></div><div class="stat-row"><strong>44</strong><span>проекта нового строительства, ремонта и реконструкции</span></div><div class="stat-row"><strong>27</strong><span>проектов по объектам культурного наследия</span></div><div class="stat-row"><strong>64</strong><span>договора по сопровождению строительства</span></div><div class="stat-row"><strong>14</strong><span>работ по геодезическому мониторингу</span></div><small>Показатели опубликованы СПУ на официальном сайте; период указан компанией: 2019–2024.</small></div></div>
+      <section class="section services-section" id="services" aria-labelledby="services-title">
+        <div class="section-shell">
+          <div class="section-intro"><span class="section-label">ВОЗМОЖНОСТИ СПУ</span><span class="section-count">03 / ОТ ДАННЫХ К РЕШЕНИЮ</span></div>
+          <div class="section-heading"><h2 id="services-title">Одна задача.<br /><em>Нужные специалисты.</em></h2><p class="section-deck">Состав работ зависит от объекта. СПУ объединяет экспертные, лабораторные, расчётные и проектные компетенции.</p></div>
+          <div class="service-list">
+            <a href="#contact"><span>01</span><strong>Техническое обследование</strong><small>Здания, сооружения, конструкции и инженерные сети</small><i>↗</i></a>
+            <a href="#contact"><span>02</span><strong>Промышленная безопасность</strong><small>ЭПБ зданий, сооружений и технических устройств</small><i>↗</i></a>
+            <a href="#contact"><span>03</span><strong>Испытания и лаборатория</strong><small>Неразрушающий контроль и испытания конструкций</small><i>↗</i></a>
+            <a href="#contact"><span>04</span><strong>3D-сканирование и обмеры</strong><small>Фактическая геометрия, модели и ортофотопланы</small><i>↗</i></a>
+            <a href="#contact"><span>05</span><strong>Расчёты и проектирование</strong><small>Реконструкция, ремонт и усиление конструкций</small><i>↗</i></a>
+            <a href="#contact"><span>06</span><strong>Мониторинг и наследие</strong><small>Наблюдение за объектом и документация по ОКН</small><i>↗</i></a>
+          </div>
+          <p class="services-note"><span class="live-dot"></span>Состав обследования определяем после знакомства с задачей и документацией объекта.</p>
         </div>
       </section>
 
-      <section class="contact-strip" id="contact-details" aria-labelledby="contact-details-title"><div class="content-wrap contact-strip-inner"><div><span class="section-kicker">04 / СВЯЗАТЬСЯ СО СПУ</span><h2 id="contact-details-title">Обсудим задачу<br /><em>вашего объекта.</em></h2></div><div class="contact-details"><a href="tel:+79064541249">+7 (906) 454-12-49 <span>ТЕЛЕФОН РУКОВОДИТЕЛЯ</span></a><a href="mailto:info@spu-pr.ru">INFO@SPU-PR.RU <span>ОТПРАВИТЬ МАТЕРИАЛЫ ПО ОБЪЕКТУ</span></a><a href="https://yandex.ru/maps/?text=%D0%9D%D0%BE%D0%B2%D0%BE%D1%87%D0%B5%D1%80%D0%BA%D0%B0%D1%81%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%9A%D1%80%D1%83%D0%BF%D1%81%D0%BA%D0%BE%D0%B9%2C%2076" target="_blank" rel="noreferrer">НОВОЧЕРКАССК, УЛ. КРУПСКОЙ, 76 <span>РОСТОВСКАЯ ОБЛАСТЬ · 346421 · КАРТА ↗</span></a><small>Звонки без выходных, с 8:00 до 18:00</small></div></div></section>
+      <section class="approach-section" id="approach" aria-labelledby="approach-title">
+        <div class="section-shell">
+          <div class="section-intro"><span class="section-label">ПОНЯТНЫЙ ПРОЦЕСС</span><span class="section-count">04 / КАК МЫ РАБОТАЕМ</span></div>
+          <div class="section-heading"><h2 id="approach-title">От первого вопроса<br /><em>до следующего шага.</em></h2><p class="section-deck">Никакой магии: понятная последовательность от исходных данных до документа, на который можно опереться.</p></div>
+          <div class="process-flow"><article><span>01</span><h3>Разбираем задачу</h3><p>Уточняем тип объекта, причину обращения и имеющиеся материалы.</p></article><article><span>02</span><h3>Обследуем</h3><p>Осматриваем и измеряем конструкции, проводим нужные испытания.</p></article><article><span>03</span><h3>Анализируем</h3><p>Сопоставляем фактические данные с документацией и выполняем расчёты.</p></article><article><span>04</span><h3>Передаём результат</h3><p>Готовим выводы и рекомендации по дальнейшей эксплуатации или работам.</p></article></div>
+          <div class="deliverable"><span class="deliverable-symbol">↳</span><div><small>РЕЗУЛЬТАТ РАБОТЫ</small><strong>Техническое заключение и обоснованные рекомендации</strong></div><a href="#contact">Уточнить состав работ <b>↗</b></a></div>
+        </div>
+      </section>
 
-      <footer class="site-footer"><a class="footer-mark" href="#top">СПУ <span>ОБСЛЕДОВАНИЕ · ЭПБ · ПРОЕКТЫ</span></a><span>© 2026 · ИНЖЕНЕРНАЯ ПРАКТИКА С 2000 ГОДА</span><div class="footer-links"><a href="mailto:info@spu-pr.ru">INFO@SPU-PR.RU ↗</a><a href="https://spu-pr.org/nashi-obekty/" target="_blank" rel="noreferrer">ВСЕ ОБЪЕКТЫ ↗</a></div><a class="footer-origin" href="https://spu-pr.org/" target="_blank" rel="noreferrer">ОФИЦИАЛЬНЫЙ САЙТ СПУ ↗</a></footer>
+      <section class="about-section" id="about" aria-labelledby="about-title"><div class="section-shell about-layout"><div><div class="section-intro"><span class="section-label">КОМАНДА И ОПЫТ</span><span class="section-count">05 / О СПУ</span></div><h2 id="about-title">Инженерная практика<br /><em>с декабря 2000 года.</em></h2><p class="about-lead">ООО «Строительно-производственное управление» создано в Новочеркасске специалистами и выпускниками ЮРГТУ. Компания выполняет проектно-изыскательские работы в разных регионах России и ближнего зарубежья.</p><blockquote>«Трудных задач много.<br /><em>Нерешаемых задач мы не встречали.</em>»<cite>АНАТОЛИЙ СУББОТИН · ГЕНЕРАЛЬНЫЙ ДИРЕКТОР</cite></blockquote></div><div class="about-proof"><div class="proof-stat"><strong>2 300+</strong><span>объектов различного уровня сложности</span></div><div class="proof-stat"><strong>8</strong><span>направлений деятельности СПУ</span></div><div class="proof-stat"><strong>6</strong><span>официальных документов и подтверждений</span></div><div class="credentials"><a href="https://spu-pr.org/assets/upload/licence-1.pdf" target="_blank" rel="noreferrer">Аттестат строительной лаборатории <b>↗</b></a><a href="https://spu-pr.org/assets/upload/licence-2.pdf" target="_blank" rel="noreferrer">Лицензия экспертизы промбезопасности <b>↗</b></a><a href="https://spu-pr.org/assets/upload/licence-5.pdf" target="_blank" rel="noreferrer">Лицензия по объектам культурного наследия <b>↗</b></a><a href="https://spu-pr.org/assets/upload/licence-4.pdf" target="_blank" rel="noreferrer">Выписка СРО · проектирование <b>↗</b></a><a href="https://spu-pr.org/assets/upload/licence-3.pdf" target="_blank" rel="noreferrer">Выписка СРО · изыскания <b>↗</b></a><a href="https://spu-pr.org/assets/upload/licence-6.zip" target="_blank" rel="noreferrer">Удостоверения специалистов <b>↗</b></a></div></div></div></section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="contact-glow" aria-hidden="true"></div><div class="section-shell contact-layout"><div><span class="section-label">ПЕРВЫЙ ШАГ — ПРОСТОЙ</span><h2 id="contact-title">Расскажите,<br />что происходит<br /><em>с объектом.</em></h2><p>Адрес, фото, чертежи и короткое описание помогут инженеру понять, с чего начать разговор.</p></div><div class="contact-panel"><a class="contact-main" href="tel:+79064541249"><small>ПОЗВОНИТЬ · БЕЗ ВЫХОДНЫХ, 8:00–18:00</small><strong>+7 (906) 454-12-49 <span>↗</span></strong></a><a class="contact-mail" href="mailto:info@spu-pr.ru?subject=Задача%20по%20объекту&body=Тип%20объекта%3A%0AАдрес%3A%0AЧто%20нужно%20проверить%3A%0A">Или отправить описание и материалы по почте <b>↗</b></a><div class="contact-office"><span>ООО «СТРОИТЕЛЬНО-ПРОИЗВОДСТВЕННОЕ УПРАВЛЕНИЕ»</span><a href="https://yandex.ru/maps/?text=%D0%9D%D0%BE%D0%B2%D0%BE%D1%87%D0%B5%D1%80%D0%BA%D0%B0%D1%81%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%9A%D1%80%D1%83%D0%BF%D1%81%D0%BA%D0%BE%D0%B9%2C%2076" target="_blank" rel="noreferrer">346421 · Новочеркасск, ул. Крупской, 76 ↗</a></div></div></div></section>
     </main>
+
+    <footer class="site-footer"><a class="brand" href="#top"><span class="brand-mark">СПУ<span class="brand-dot">.</span></span><span class="brand-note">ИНЖЕНЕРНЫЕ<br />РЕШЕНИЯ С 2000 ГОДА</span></a><span>ТЕХНИЧЕСКОЕ ОБСЛЕДОВАНИЕ · ЭПБ · ПРОЕКТИРОВАНИЕ</span><a href="https://spu-pr.org/" target="_blank" rel="noreferrer">ОФИЦИАЛЬНЫЙ САЙТ СПУ ↗</a><small>© СПУ · ООО «Строительно-производственное управление»</small></footer>
   </body>
 </html>
