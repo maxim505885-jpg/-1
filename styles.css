@@ -199,3 +199,15 @@ body,.story,.site-footer{background:var(--void)}
 .portfolio-count{margin:0;color:rgba(239,240,239,.48);font-size:10px;white-space:nowrap}
 .project-card[hidden]{display:none!important}
 @media(max-width:760px){.portfolio-tools{align-items:flex-start;flex-direction:column;gap:10px;margin:-14px 0 18px}.portfolio-filters{gap:6px}.portfolio-filters button{min-height:34px;padding:0 10px;font-size:10px}.portfolio-count{font-size:9px}}
+
+/* Small motion refinements: soften layout swaps and standardize easing. */
+:root{scroll-padding-top:18px}
+.scene-progress span{transition:width .28s cubic-bezier(.22,.68,0,1)}
+.top-nav a,.corner-contact,.footer-links a,.footer-origin{transition:color .28s cubic-bezier(.22,.68,0,1),opacity .28s ease}
+.service-card,.project-card,.process-step,.about-badges a,.contact-details>a{transition-timing-function:cubic-bezier(.22,.68,0,1)}
+.portfolio-grid{view-transition-name:spu-project-results}
+::view-transition-old(spu-project-results){animation:spu-results-out .2s ease both}
+::view-transition-new(spu-project-results){animation:spu-results-in .36s cubic-bezier(.22,.68,0,1) both}
+@keyframes spu-results-out{to{opacity:0;transform:translateY(6px) scale(.995)}}
+@keyframes spu-results-in{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){::view-transition-old(spu-project-results),::view-transition-new(spu-project-results){animation-duration:.01ms!important}}

@@ -374,7 +374,7 @@ function animateParticles(time) {
   const delta = lastMotionTime ? Math.min(time - lastMotionTime, 64) : 16;
   lastMotionTime = time;
   if (Math.abs(targetProgress - scrollProgress) > 0.0002) {
-    const follow = 1 - Math.exp(-delta / 185);
+    const follow = 1 - Math.exp(-delta / 235);
     scrollProgress += (targetProgress - scrollProgress) * follow;
     if (Math.abs(targetProgress - scrollProgress) < 0.0002) scrollProgress = targetProgress;
     renderStoryProgress();
@@ -412,10 +412,34 @@ const depthItems = [...document.querySelectorAll(
   ".service-card, .project-card, .process-step, .about-quote, .about-numbers, .about-badges a, .known-object-tags span, .contact-details > a",
 )];
 let depthFramePending = false;
+let lastDepthFrameTime = 0;
+const sectionDepthValues = new WeakMap();
+const itemDepthValues = new WeakMap();
+
+function easeDepthValues(cache, element, targets, factor) {
+  let values = cache.get(element);
+  if (!values) {
+    values = { ...targets };
+    cache.set(element, values);
+    return { values, moving: false };
+  }
+
+  let moving = false;
+  Object.entries(targets).forEach(([key, target]) => {
+    const difference = target - values[key];
+    if (Math.abs(difference) < 0.035) values[key] = target;
+    else {
+      values[key] += difference * factor;
+      moving = true;
+    }
+  });
+  return { values, moving };
+}
 
 function setupProjectFilters() {
   const filters = [...document.querySelectorAll("[data-project-filter]")];
   const cards = [...document.querySelectorAll(".project-card")];
+  const grid = document.querySelector(".portfolio-grid");
   const countLabel = document.querySelector("[data-project-count]");
   if (!filters.length || !cards.length) return;
 
@@ -428,50 +452,79 @@ function setupProjectFilters() {
 
   filters.forEach((button) => {
     button.addEventListener("click", () => {
-      const category = button.dataset.projectFilter;
-      let visibleCount = 0;
-      filters.forEach((filter) => filter.setAttribute("aria-pressed", String(filter === button)));
-      cards.forEach((card) => {
-        const description = `${card.querySelector(".project-tag")?.textContent || ""} ${card.querySelector(".project-info")?.textContent || ""}`;
-        const visible = category === "all" || Boolean(matches[category]?.test(description));
-        card.hidden = !visible;
-        if (visible) visibleCount += 1;
-      });
-      if (countLabel) countLabel.textContent = `Показано ${visibleCount} ${visibleCount === 1 ? "проект" : visibleCount > 1 && visibleCount < 5 ? "проекта" : "проектов"}`;
+      const applyFilter = () => {
+        const category = button.dataset.projectFilter;
+        let visibleCount = 0;
+        filters.forEach((filter) => filter.setAttribute("aria-pressed", String(filter === button)));
+        cards.forEach((card) => {
+          const description = `${card.querySelector(".project-tag")?.textContent || ""} ${card.querySelector(".project-info")?.textContent || ""}`;
+          const visible = category === "all" || Boolean(matches[category]?.test(description));
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+        if (countLabel) countLabel.textContent = `Показано ${visibleCount} ${visibleCount === 1 ? "проект" : visibleCount > 1 && visibleCount < 5 ? "проекта" : "проектов"}`;
+      };
+
+      if (grid && document.startViewTransition) document.startViewTransition(applyFilter);
+      else applyFilter();
     });
   });
 }
 
-function updateDepthScene() {
+function updateDepthScene(timestamp) {
   depthFramePending = false;
+  const now = timestamp || performance.now();
+  const delta = lastDepthFrameTime ? Math.min(now - lastDepthFrameTime, 64) : 16;
+  lastDepthFrameTime = now;
+  const follow = 1 - Math.exp(-delta / 185);
   const viewportHeight = window.innerHeight || 1;
   const compact = window.innerWidth < 760;
+  let moving = false;
   depthSections.forEach((section) => {
     const bounds = section.getBoundingClientRect();
     const progress = clamp01((viewportHeight - bounds.top) / (viewportHeight + bounds.height));
     const drift = (progress - 0.5) * (compact ? -100 : -158);
     const tilt = (0.5 - progress) * (compact ? 5.2 : 7.4);
-    section.style.setProperty("--section-scroll", progress.toFixed(3));
-    section.style.setProperty("--section-drift", `${drift.toFixed(1)}px`);
-    section.style.setProperty("--section-drift-x", `${(drift * -1).toFixed(1)}px`);
-    section.style.setProperty("--section-drift-y", `${(drift * 0.8).toFixed(1)}px`);
-    section.style.setProperty("--section-drift-reverse", `${(drift * -1).toFixed(1)}px`);
-    section.style.setProperty("--section-tilt", `${tilt.toFixed(2)}deg`);
-    section.style.setProperty("--section-tilt-inverse", `${(-tilt).toFixed(2)}deg`);
-    section.style.setProperty("--section-tilt-double", `${(tilt * 2).toFixed(2)}deg`);
-    section.style.setProperty("--content-drift", `${((progress - 0.5) * (compact ? -64 : -112)).toFixed(1)}px`);
-    section.style.setProperty("--content-tilt", `${(tilt * 0.34).toFixed(2)}deg`);
+    const result = easeDepthValues(sectionDepthValues, section, {
+      progress,
+      drift,
+      driftX: -drift,
+      driftY: drift * 0.8,
+      driftReverse: -drift,
+      tilt,
+      tiltInverse: -tilt,
+      tiltDouble: tilt * 2,
+      contentDrift: (progress - 0.5) * (compact ? -64 : -112),
+      contentTilt: tilt * 0.34,
+    }, follow);
+    const values = result.values;
+    moving ||= result.moving;
+    section.style.setProperty("--section-scroll", values.progress.toFixed(3));
+    section.style.setProperty("--section-drift", `${values.drift.toFixed(1)}px`);
+    section.style.setProperty("--section-drift-x", `${values.driftX.toFixed(1)}px`);
+    section.style.setProperty("--section-drift-y", `${values.driftY.toFixed(1)}px`);
+    section.style.setProperty("--section-drift-reverse", `${values.driftReverse.toFixed(1)}px`);
+    section.style.setProperty("--section-tilt", `${values.tilt.toFixed(2)}deg`);
+    section.style.setProperty("--section-tilt-inverse", `${values.tiltInverse.toFixed(2)}deg`);
+    section.style.setProperty("--section-tilt-double", `${values.tiltDouble.toFixed(2)}deg`);
+    section.style.setProperty("--content-drift", `${values.contentDrift.toFixed(1)}px`);
+    section.style.setProperty("--content-tilt", `${values.contentTilt.toFixed(2)}deg`);
   });
 
   depthItems.forEach((item) => {
     const bounds = item.getBoundingClientRect();
     const offset = clamp01((bounds.top + bounds.height / 2) / viewportHeight);
     const parallax = (offset - 0.5) * (compact ? -16 : -30);
-    item.style.setProperty("--item-drift", `${parallax.toFixed(1)}px`);
+    const targets = { parallax };
     if (item.classList.contains("project-card")) {
-      item.style.setProperty("--image-drift", `${(parallax * 1.35).toFixed(1)}px`);
+      targets.image = parallax * 1.35;
     }
+    const result = easeDepthValues(itemDepthValues, item, targets, follow);
+    moving ||= result.moving;
+    item.style.setProperty("--item-drift", `${result.values.parallax.toFixed(1)}px`);
+    if (result.values.image !== undefined) item.style.setProperty("--image-drift", `${result.values.image.toFixed(1)}px`);
   });
+  if (moving) requestDepthUpdate();
 }
 
 function requestDepthUpdate() {
@@ -498,8 +551,8 @@ function setupDepthExperience() {
       const bounds = item.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width - 0.5;
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-      item.style.setProperty("--tilt-x", `${(-y * 10).toFixed(2)}deg`);
-      item.style.setProperty("--tilt-y", `${(x * 12).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-y", `${(x * 8).toFixed(2)}deg`);
     });
     item.addEventListener("pointerleave", () => {
       item.style.setProperty("--tilt-x", "0deg");
