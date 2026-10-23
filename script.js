@@ -186,7 +186,7 @@ function createParticles() {
     return (seed - 1) / 2147483646;
   };
   const compact = bounds.width < 760;
-  const count = compact ? 320 : 820;
+  const count = compact ? 220 : 460;
   particles = Array.from({ length: count }, (_, index) => {
     const angle = random() * Math.PI * 2;
     const radius = Math.sqrt(random());
@@ -201,7 +201,7 @@ function createParticles() {
       phase: random() * Math.PI * 2,
       speed: 0.45 + random() * 1.3,
       color: particleColors[Math.floor(random() * particleColors.length)],
-      alpha: 0.32 + random() * 0.62,
+      alpha: 0.22 + random() * 0.42,
       triangle: index % 5 !== 0,
       orbit: (random() - 0.5) * 0.09,
     };
@@ -322,7 +322,7 @@ function drawParticles(time) {
   const centerY = canvasHeight * (compact ? 0.49 : 0.47) + pointerY * 0.55;
   const cloudWidth = canvasWidth * (compact ? 0.52 : 0.34);
   const cloudHeight = canvasHeight * (compact ? 0.35 : 0.39);
-  const reveal = clamp01((scrollProgress - 0.02) * 1.6 + 0.58);
+  const reveal = 0.16 + clamp01((scrollProgress - 0.04) * 1.2) * 0.48;
 
   context.clearRect(0, 0, canvasWidth, canvasHeight);
   particles.forEach((particle, index) => {
@@ -359,8 +359,8 @@ function drawParticles(time) {
       context.arc(x, y, size * 0.42, 0, Math.PI * 2);
       context.fill();
     }
-    if (index % 17 === 0) {
-      context.globalAlpha = opacity * 0.35;
+    if (index % 37 === 0) {
+      context.globalAlpha = opacity * 0.24;
       context.beginPath();
       context.arc(x, y, size * 3.2, 0, Math.PI * 2);
       context.fill();
