@@ -42,3 +42,46 @@ document.querySelectorAll(".carousel-button").forEach((button) => {
     });
   });
 });
+
+const heroScene = document.querySelector(".hero-art");
+const scrollModel = document.querySelector(".scroll-model");
+const projectScenes = document.querySelectorAll(".project-image");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let scrollFramePending = false;
+
+function clamp01(value) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function updateScrollDepth() {
+  scrollFramePending = false;
+  if (reduceMotion.matches) return;
+
+  if (heroScene) {
+    const heroHeight = heroScene.closest(".hero")?.offsetHeight || window.innerHeight;
+    heroScene.style.setProperty("--hero-progress", clamp01(window.scrollY / (heroHeight * 0.9)).toFixed(3));
+  }
+
+  if (scrollModel) {
+    const rect = scrollModel.getBoundingClientRect();
+    const progress = clamp01((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
+    scrollModel.style.setProperty("--model-progress", progress.toFixed(3));
+  }
+
+  projectScenes.forEach((scene) => {
+    const rect = scene.getBoundingClientRect();
+    const progress = clamp01((window.innerHeight * 0.9 - rect.top) / (window.innerHeight * 0.85));
+    scene.style.setProperty("--card-progress", progress.toFixed(3));
+  });
+}
+
+function requestScrollDepthUpdate() {
+  if (scrollFramePending) return;
+  scrollFramePending = true;
+  window.requestAnimationFrame(updateScrollDepth);
+}
+
+window.addEventListener("scroll", requestScrollDepthUpdate, { passive: true });
+window.addEventListener("resize", requestScrollDepthUpdate);
+reduceMotion.addEventListener?.("change", requestScrollDepthUpdate);
+updateScrollDepth();
