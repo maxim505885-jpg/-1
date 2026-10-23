@@ -413,6 +413,35 @@ const depthItems = [...document.querySelectorAll(
 )];
 let depthFramePending = false;
 
+function setupProjectFilters() {
+  const filters = [...document.querySelectorAll("[data-project-filter]")];
+  const cards = [...document.querySelectorAll(".project-card")];
+  const countLabel = document.querySelector("[data-project-count]");
+  if (!filters.length || !cards.length) return;
+
+  const matches = {
+    inspection: /ОБСЛЕДОВАНИЕ|ИНСТРУМЕНТАЛЬНО|ТЕХНИЧЕСКОЕ СОСТОЯНИЕ|ЖИЛОЙ ФОНД|КУЛЬТУРНЫЙ ОБЪЕКТ|АВАРИЙНАЯ ЭКСПЕРТИЗА/i,
+    epb: /ЭПБ|ПРОМЫШЛЕННАЯ БЕЗОПАСНОСТЬ/i,
+    scan: /3D-СКАНИРОВАНИЕ|3D-МОДЕЛЬ/i,
+    design: /ПРОЕКТИРОВАНИЕ|РЕКОНСТРУКЦИЯ|ИСПЫТАНИЯ/i,
+  };
+
+  filters.forEach((button) => {
+    button.addEventListener("click", () => {
+      const category = button.dataset.projectFilter;
+      let visibleCount = 0;
+      filters.forEach((filter) => filter.setAttribute("aria-pressed", String(filter === button)));
+      cards.forEach((card) => {
+        const description = `${card.querySelector(".project-tag")?.textContent || ""} ${card.querySelector(".project-info")?.textContent || ""}`;
+        const visible = category === "all" || Boolean(matches[category]?.test(description));
+        card.hidden = !visible;
+        if (visible) visibleCount += 1;
+      });
+      if (countLabel) countLabel.textContent = `Показано ${visibleCount} ${visibleCount === 1 ? "проект" : visibleCount > 1 && visibleCount < 5 ? "проекта" : "проектов"}`;
+    });
+  });
+}
+
 function updateDepthScene() {
   depthFramePending = false;
   const viewportHeight = window.innerHeight || 1;
@@ -514,3 +543,4 @@ if (!prefersReducedMotion.matches) {
   drawScanCloud(0);
 }
 setupDepthExperience();
+setupProjectFilters();

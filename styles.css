@@ -188,3 +188,14 @@ body,.story,.site-footer{background:var(--void)}
  .stat-row span{font-size:11px}
  .contact-details>a{font-size:12px}
 }
+
+/* Portfolio filters behave like a compact project index, not decorative tabs. */
+.portfolio-tools{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:20px;margin:-35px 0 24px}
+.portfolio-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.portfolio-filters button{min-height:38px;padding:0 14px;border:1px solid rgba(239,240,239,.24);border-radius:99px;background:transparent;color:rgba(239,240,239,.72);font:500 11px/1 var(--sans);cursor:pointer;transition:background .22s ease,color .22s ease,border-color .22s ease,transform .22s ease}
+.portfolio-filters button:hover{transform:translateY(-2px);border-color:rgba(239,240,239,.64);color:#fff}
+.portfolio-filters button[aria-pressed="true"]{border-color:#ffb829;background:#ffb829;color:#191714}
+.portfolio-filters button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.portfolio-count{margin:0;color:rgba(239,240,239,.48);font-size:10px;white-space:nowrap}
+.project-card[hidden]{display:none!important}
+@media(max-width:760px){.portfolio-tools{align-items:flex-start;flex-direction:column;gap:10px;margin:-14px 0 18px}.portfolio-filters{gap:6px}.portfolio-filters button{min-height:34px;padding:0 10px;font-size:10px}.portfolio-count{font-size:9px}}
