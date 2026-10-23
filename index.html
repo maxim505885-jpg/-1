@@ -21,6 +21,7 @@
           <div class="scene-haze"></div>
           <div class="scene-grid"></div>
           <div class="scene-vignette"></div>
+          <canvas class="particle-field" aria-hidden="true"></canvas>
           <div class="scene-specimen" aria-hidden="true">
             <div class="specimen-orbit orbit-a"></div>
             <div class="specimen-orbit orbit-b"></div>
@@ -38,7 +39,7 @@
             <a class="corner-contact" href="#contact">ОБСУДИТЬ ОБЪЕКТ <span>↗</span></a>
           </header>
 
-          <div class="story-frames" aria-live="polite">
+          <div class="story-frames" aria-live="off">
             <article class="story-frame frame-hero is-active" data-frame="0">
               <div class="manifesto"><span class="micro-label">/// О КОМПАНИИ</span><p>Совмещаем<br />науку и производство.<br />Проектируем уверенность.</p><span class="manifesto-foot">СТРОИТЕЛЬНОЕ УПРАВЛЕНИЕ<br />РОСТОВСКАЯ ОБЛАСТЬ · RU</span></div>
               <div class="hero-caption"><span class="micro-label">НАДЁЖНОСТЬ НАЧИНАЕТСЯ С ТОЧНОСТИ</span><h1>Инженерия<br />для реальных<br />условий.</h1></div>
@@ -81,9 +82,9 @@
           </div>
 
           <div class="scene-ui">
-            <div class="scene-status"><span class="status-light"></span><span data-scene-name>АРКТИЧЕСКАЯ СЦЕНА / СПУ</span></div>
+            <div class="scene-status" role="status" aria-live="polite" aria-atomic="true"><span class="status-light"></span><span data-scene-name>АРКТИЧЕСКАЯ СЦЕНА / СПУ</span></div>
             <div class="scene-progress" aria-hidden="true"><span></span></div>
-            <span class="scene-counter"><b data-current-frame>00</b> <i>/</i> 05</span>
+            <span class="scene-counter"><b data-current-frame>01</b> <i>/</i> 06</span>
           </div>
         </div>
         <div class="story-anchor" id="directions"></div>
@@ -91,7 +92,7 @@
         <div class="story-anchor contact-anchor" id="contact"></div>
       </section>
 
-      <footer class="site-footer"><a class="footer-mark" href="#top">СПУ <span>ИНЖЕНЕРНОЕ БЮРО</span></a><span>© 2026 · ИНЖЕНЕРНАЯ ТОЧНОСТЬ С 2000 ГОДА</span><a href="https://spu-pr.org/rekvizity/" target="_blank" rel="noreferrer">РЕКВИЗИТЫ ↗</a></footer>
+      <footer class="site-footer"><a class="footer-mark" href="#top">СПУ <span>ИНЖЕНЕРНОЕ БЮРО</span></a><span>© 2026 · ИНЖЕНЕРНАЯ ТОЧНОСТЬ С 2000 ГОДА</span><div class="footer-links"><a href="mailto:info@spu-pr.ru">INFO@SPU-PR.RU ↗</a><a href="https://spu-pr.org/rekvizity/" target="_blank" rel="noreferrer">РЕКВИЗИТЫ ↗</a></div></footer>
     </main>
   </body>
 </html>
