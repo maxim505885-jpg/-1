@@ -7,12 +7,12 @@ const progressBar = document.querySelector(".scene-progress span");
 const particleCanvas = document.querySelector(".particle-field");
 const particleContext = particleCanvas?.getContext("2d");
 const sceneNames = [
-  "АРКТИЧЕСКАЯ СЦЕНА / СПУ",
-  "ИССЛЕДОВАНИЕ / 3D",
-  "ЭКСПЕРТИЗА / РАСЧЁТ",
-  "ИЗБРАННЫЕ ОБЪЕКТЫ",
-  "ОПЫТ / С 2000 ГОДА",
-  "СЛЕДУЮЩИЙ ШАГ",
+  "ТЕХНИЧЕСКОЕ ОБСЛЕДОВАНИЕ СПУ",
+  "ДИАГНОСТИКА / ИЗМЕРЕНИЯ",
+  "ТЕХНИЧЕСКОЕ ЗАКЛЮЧЕНИЕ / РЕШЕНИЯ",
+  "РЕАЛЬНЫЕ ОБЪЕКТЫ / ПРОЕКТЫ",
+  "ИНЖЕНЕРНАЯ ПРАКТИКА С 2000 ГОДА",
+  "ОБСУДИТЬ ОБСЛЕДОВАНИЕ ОБЪЕКТА",
 ];
 const motionGuideFrames = [
   { at: 0, x: 12, y: -38, z: -7, scale: 0.35, lift: 85, opacity: 0.04, cameraX: 0, cameraY: 0, cameraScale: 1.03, ring: 0, grid: 0 },

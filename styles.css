@@ -71,3 +71,9 @@ body,.story,.site-footer{background:var(--void)}
 .story-frame>.frame-cross-line{transform:rotate(31deg)!important}
 .scene-progress span{width:100%;transform:scaleX(var(--progress,0));transform-origin:left center;transition:none}
 .story-frame>.frame-index{opacity:var(--frame-index-opacity,1)!important}
+.object-list a{grid-template-columns:22px minmax(0,1fr) 18px;gap:9px;min-height:64px;padding:8px 0}
+.object-list a span.object-meta{display:grid;gap:4px;min-width:0;color:rgba(250,251,252,.9);font-size:inherit}
+.object-meta strong{overflow:hidden;font-family:var(--sans);font-size:10px;font-weight:500;line-height:1.25;letter-spacing:0;text-overflow:ellipsis}
+.object-meta small{overflow:hidden;color:rgba(246,247,248,.62);font-size:6px;line-height:1.4;letter-spacing:.025em;text-overflow:ellipsis}
+.contact-block p{max-width:430px;margin:-12px 0 22px;color:rgba(246,247,248,.78);font-family:var(--sans);font-size:12px;line-height:1.65}
+@media(max-width:760px){.frame-projects .frame-copy.copy-left{top:21%;bottom:auto}.object-list{bottom:10%;}.object-list a{grid-template-columns:20px minmax(0,1fr) 14px;min-height:48px;padding:5px 0;gap:6px}.object-meta strong{font-size:8px;white-space:nowrap}.object-meta small{font-size:5.5px;white-space:nowrap}.contact-block p{font-size:10px;margin:-10px 0 16px}}
