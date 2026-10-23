@@ -407,6 +407,79 @@ function syncAmbientMotion() {
   if (!particleFrame) particleFrame = window.requestAnimationFrame(animateParticles);
 }
 
+const depthSections = [...document.querySelectorAll(".content-section, .contact-strip")];
+const depthItems = [...document.querySelectorAll(
+  ".service-card, .project-card, .about-quote, .about-numbers, .about-badges a, .known-object-tags span, .contact-details > a",
+)];
+let depthFramePending = false;
+
+function updateDepthScene() {
+  depthFramePending = false;
+  const viewportHeight = window.innerHeight || 1;
+  depthSections.forEach((section) => {
+    const bounds = section.getBoundingClientRect();
+    const progress = clamp01((viewportHeight - bounds.top) / (viewportHeight + bounds.height));
+    const drift = (progress - 0.5) * -58;
+    const tilt = (0.5 - progress) * 2.4;
+    section.style.setProperty("--section-scroll", progress.toFixed(3));
+    section.style.setProperty("--section-drift", `${drift.toFixed(1)}px`);
+    section.style.setProperty("--section-drift-x", `${(drift * -1).toFixed(1)}px`);
+    section.style.setProperty("--section-drift-y", `${(drift * 0.8).toFixed(1)}px`);
+    section.style.setProperty("--section-drift-reverse", `${(drift * -1).toFixed(1)}px`);
+    section.style.setProperty("--section-tilt", `${tilt.toFixed(2)}deg`);
+    section.style.setProperty("--section-tilt-inverse", `${(-tilt).toFixed(2)}deg`);
+    section.style.setProperty("--section-tilt-double", `${(tilt * 2).toFixed(2)}deg`);
+  });
+
+  depthItems.forEach((item) => {
+    const bounds = item.getBoundingClientRect();
+    const offset = clamp01((bounds.top + bounds.height / 2) / viewportHeight);
+    const parallax = (offset - 0.5) * -11;
+    item.style.setProperty("--item-drift", `${parallax.toFixed(1)}px`);
+    if (item.classList.contains("project-card")) {
+      item.style.setProperty("--image-drift", `${(parallax * 1.35).toFixed(1)}px`);
+    }
+  });
+}
+
+function requestDepthUpdate() {
+  if (depthFramePending) return;
+  depthFramePending = true;
+  window.requestAnimationFrame(updateDepthScene);
+}
+
+function setupDepthExperience() {
+  if (prefersReducedMotion.matches) return;
+  document.documentElement.classList.add("has-depth-motion");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle("is-depth-visible", entry.isIntersecting));
+  }, { threshold: 0.08, rootMargin: "0px 0px -7% 0px" });
+
+  depthItems.forEach((item, index) => {
+    item.classList.add("depth-card");
+    item.style.setProperty("--depth-order", String(index % 8));
+    item.style.setProperty("--depth-delay", `${(index % 8) * 32}ms`);
+    observer.observe(item);
+    if (!hasFinePointer.matches) return;
+    item.addEventListener("pointermove", (event) => {
+      const bounds = item.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      item.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-y", `${(x * 8).toFixed(2)}deg`);
+    });
+    item.addEventListener("pointerleave", () => {
+      item.style.setProperty("--tilt-x", "0deg");
+      item.style.setProperty("--tilt-y", "0deg");
+    });
+  });
+
+  window.addEventListener("scroll", requestDepthUpdate, { passive: true });
+  window.addEventListener("resize", requestDepthUpdate);
+  requestDepthUpdate();
+}
+
 window.addEventListener("scroll", requestStoryUpdate, { passive: true });
 window.addEventListener("resize", () => {
   requestStoryUpdate();
@@ -437,3 +510,4 @@ if (!prefersReducedMotion.matches) {
   drawParticles(0);
   drawScanCloud(0);
 }
+setupDepthExperience();
