@@ -14,6 +14,21 @@ const sceneNames = [
   "ОПЫТ / С 2000 ГОДА",
   "СЛЕДУЮЩИЙ ШАГ",
 ];
+const motionFrames = [
+  { at: 0, x: 12, y: -38, z: -7, scale: 0.35, lift: 85, opacity: 0.04, cameraX: 0, cameraY: 0, cameraScale: 1.03, ring: 0, grid: 0 },
+  { at: 0.08, x: 4, y: -5, z: -4, scale: 0.62, lift: 55, opacity: 0.62, cameraX: -12, cameraY: 4, cameraScale: 1.05, ring: 22, grid: -2 },
+  { at: 0.16, x: -9, y: 32, z: 4, scale: 0.96, lift: 16, opacity: 0.9, cameraX: -36, cameraY: 12, cameraScale: 1.08, ring: 50, grid: 4 },
+  { at: 0.24, x: 6, y: 84, z: 11, scale: 0.72, lift: -10, opacity: 0.92, cameraX: -60, cameraY: 20, cameraScale: 1.13, ring: 92, grid: 9 },
+  { at: 0.32, x: 18, y: 146, z: 2, scale: 1.08, lift: 25, opacity: 0.86, cameraX: -25, cameraY: 35, cameraScale: 1.17, ring: 130, grid: 13 },
+  { at: 0.4, x: -7, y: 205, z: -10, scale: 1.22, lift: -30, opacity: 0.92, cameraX: 18, cameraY: 10, cameraScale: 1.2, ring: 180, grid: 4 },
+  { at: 0.48, x: -16, y: 264, z: -3, scale: 0.76, lift: -65, opacity: 0.88, cameraX: 36, cameraY: -8, cameraScale: 1.22, ring: 230, grid: -8 },
+  { at: 0.56, x: 8, y: 327, z: 10, scale: 1.16, lift: -5, opacity: 0.92, cameraX: 22, cameraY: -18, cameraScale: 1.24, ring: 270, grid: -12 },
+  { at: 0.64, x: 17, y: 390, z: 4, scale: 0.93, lift: 28, opacity: 0.86, cameraX: -18, cameraY: -12, cameraScale: 1.2, ring: 320, grid: -4 },
+  { at: 0.72, x: -4, y: 448, z: -12, scale: 1.24, lift: -40, opacity: 0.9, cameraX: -48, cameraY: 6, cameraScale: 1.17, ring: 360, grid: 8 },
+  { at: 0.8, x: -13, y: 503, z: -4, scale: 0.94, lift: 0, opacity: 0.8, cameraX: -20, cameraY: 22, cameraScale: 1.14, ring: 420, grid: 13 },
+  { at: 0.9, x: 8, y: 560, z: 12, scale: 1.12, lift: 48, opacity: 0.62, cameraX: 20, cameraY: 10, cameraScale: 1.12, ring: 475, grid: 5 },
+  { at: 1, x: 0, y: 615, z: 0, scale: 0.55, lift: 95, opacity: 0.04, cameraX: 0, cameraY: 0, cameraScale: 1.08, ring: 540, grid: 0 },
+];
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const particleColors = ["#8052ff", "#ffb829", "#15846e", "#b49aff", "#7d8dff"];
@@ -33,6 +48,42 @@ function clamp01(value) {
   return Math.min(1, Math.max(0, value));
 }
 
+function applyMotionFrame(progress) {
+  if (!stage) return;
+  let nextIndex = motionFrames.findIndex((frame) => frame.at >= progress);
+  if (nextIndex < 1) nextIndex = 1;
+  if (nextIndex < 0) nextIndex = motionFrames.length - 1;
+
+  const start = motionFrames[nextIndex - 1];
+  const end = motionFrames[nextIndex];
+  const previous = motionFrames[Math.max(0, nextIndex - 2)];
+  const following = motionFrames[Math.min(motionFrames.length - 1, nextIndex + 1)];
+  const localProgress = clamp01((progress - start.at) / (end.at - start.at));
+  const blend = (key) => {
+    const t = localProgress;
+    const t2 = t * t;
+    const t3 = t2 * t;
+    return 0.5 * (
+      2 * start[key]
+      + (-previous[key] + end[key]) * t
+      + (2 * previous[key] - 5 * start[key] + 4 * end[key] - following[key]) * t2
+      + (-previous[key] + 3 * start[key] - 3 * end[key] + following[key]) * t3
+    );
+  };
+
+  stage.style.setProperty("--model-rotate-x", `${blend("x").toFixed(2)}deg`);
+  stage.style.setProperty("--model-rotate-y", `${blend("y").toFixed(2)}deg`);
+  stage.style.setProperty("--model-rotate-z", `${blend("z").toFixed(2)}deg`);
+  stage.style.setProperty("--model-scale", Math.min(1.12, Math.max(0.35, blend("scale"))).toFixed(3));
+  stage.style.setProperty("--model-lift", `${blend("lift").toFixed(2)}px`);
+  stage.style.setProperty("--model-opacity", clamp01(blend("opacity")).toFixed(3));
+  stage.style.setProperty("--camera-x", `${blend("cameraX").toFixed(2)}px`);
+  stage.style.setProperty("--camera-y", `${blend("cameraY").toFixed(2)}px`);
+  stage.style.setProperty("--camera-scale", blend("cameraScale").toFixed(3));
+  stage.style.setProperty("--ring-rotation", `${blend("ring").toFixed(2)}deg`);
+  stage.style.setProperty("--grid-rotation", `${blend("grid").toFixed(2)}deg`);
+}
+
 function updateStory() {
   framePending = false;
   if (!story || !stage || frames.length === 0) return;
@@ -40,6 +91,7 @@ function updateStory() {
   const storyTop = story.getBoundingClientRect().top + window.scrollY;
   const travel = Math.max(story.offsetHeight - window.innerHeight, 1);
   scrollProgress = clamp01((window.scrollY - storyTop) / travel);
+  applyMotionFrame(scrollProgress);
   const index = Math.min(frames.length - 1, Math.floor(scrollProgress * frames.length));
 
   stage.style.setProperty("--scroll-progress", scrollProgress.toFixed(3));
@@ -165,9 +217,20 @@ function animateParticles(time) {
   stage?.style.setProperty("--pointer-tilt-x", `${(pointerX * -0.12).toFixed(2)}deg`);
   stage?.style.setProperty("--pointer-tilt-y", `${(pointerY * 0.12).toFixed(2)}deg`);
   drawParticles(time);
-  if (!prefersReducedMotion.matches) {
-    window.requestAnimationFrame(animateParticles);
+  if (!prefersReducedMotion.matches && !document.hidden) {
+    particleFrame = window.requestAnimationFrame(animateParticles);
   }
+}
+
+function syncAmbientMotion() {
+  document.documentElement.classList.toggle("motion-paused", document.hidden);
+  if (prefersReducedMotion.matches || document.hidden) {
+    if (particleFrame) window.cancelAnimationFrame(particleFrame);
+    particleFrame = 0;
+    if (prefersReducedMotion.matches) drawParticles(0);
+    return;
+  }
+  if (!particleFrame) particleFrame = window.requestAnimationFrame(animateParticles);
 }
 
 window.addEventListener("scroll", requestStoryUpdate, { passive: true });
@@ -188,16 +251,13 @@ if (hasFinePointer.matches && !prefersReducedMotion.matches) {
   });
 }
 
-prefersReducedMotion.addEventListener?.("change", () => {
-  if (!prefersReducedMotion.matches && !particleFrame) {
-    particleFrame = window.requestAnimationFrame(animateParticles);
-  }
-});
+prefersReducedMotion.addEventListener?.("change", syncAmbientMotion);
+document.addEventListener("visibilitychange", syncAmbientMotion);
 
 updateStory();
 createParticles();
 if (!prefersReducedMotion.matches) {
-  particleFrame = window.requestAnimationFrame(animateParticles);
+  syncAmbientMotion();
 } else {
   drawParticles(0);
 }
