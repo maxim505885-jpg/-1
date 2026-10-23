@@ -131,7 +131,8 @@ function updateStory() {
 
 function renderStoryProgress() {
   if (!stage || frames.length === 0) return;
-  const index = Math.min(frames.length - 1, Math.floor(scrollProgress * frames.length));
+  let index = 0;
+  let dominantOpacity = -1;
   stage.style.setProperty("--scroll-progress", scrollProgress.toFixed(3));
   applyMotionFrame(scrollProgress);
   if (progressBar) progressBar.style.setProperty("--progress", scrollProgress.toFixed(4));
@@ -139,13 +140,18 @@ function renderStoryProgress() {
   const chapterPosition = scrollProgress * frames.length;
   frames.forEach((frame, frameIndex) => {
     const local = chapterPosition - frameIndex;
-    const fadeIn = frameIndex === 0 ? 1 : smoothstep(0, 0.06, local);
-    const fadeOut = frameIndex === frames.length - 1 ? 1 : 1 - smoothstep(0.94, 1, local);
+    // Crossfade each chapter around its boundary for a continuous film-like transition.
+    const fadeIn = frameIndex === 0 ? 1 : smoothstep(-0.08, 0.08, local);
+    const fadeOut = frameIndex === frames.length - 1 ? 1 : 1 - smoothstep(0.92, 1.08, local);
     const opacity = fadeIn * fadeOut;
     frame.style.opacity = opacity.toFixed(3);
     frame.style.transform = prefersReducedMotion.matches
       ? "none"
-      : `translate3d(0, ${(1 - opacity) * 12}px, 0) scale(${(0.99 + opacity * 0.01).toFixed(4)})`;
+      : `translate3d(0, ${(1 - opacity) * 30}px, 0) scale(${(0.985 + opacity * 0.015).toFixed(4)})`;
+    if (opacity > dominantOpacity) {
+      dominantOpacity = opacity;
+      index = frameIndex;
+    }
     const isVisible = opacity > 0.005;
     if (frame.classList.contains("is-visible") !== isVisible) frame.classList.toggle("is-visible", isVisible);
   });
@@ -374,13 +380,15 @@ function animateParticles(time) {
   const delta = lastMotionTime ? Math.min(time - lastMotionTime, 64) : 16;
   lastMotionTime = time;
   if (Math.abs(targetProgress - scrollProgress) > 0.0002) {
-    const follow = 1 - Math.exp(-delta / 235);
+    // A little camera inertia makes scroll feel like a deliberate camera move.
+    const follow = 1 - Math.exp(-delta / 315);
     scrollProgress += (targetProgress - scrollProgress) * follow;
     if (Math.abs(targetProgress - scrollProgress) < 0.0002) scrollProgress = targetProgress;
     renderStoryProgress();
   }
-  pointerX += (pointerTargetX - pointerX) * 0.075;
-  pointerY += (pointerTargetY - pointerY) * 0.075;
+  const pointerFollow = 1 - Math.exp(-delta / 190);
+  pointerX += (pointerTargetX - pointerX) * pointerFollow;
+  pointerY += (pointerTargetY - pointerY) * pointerFollow;
   stage?.style.setProperty("--pointer-x", `${pointerX.toFixed(2)}px`);
   stage?.style.setProperty("--pointer-y", `${pointerY.toFixed(2)}px`);
   stage?.style.setProperty("--pointer-tilt-x", `${(pointerX * -0.12).toFixed(2)}deg`);
@@ -476,7 +484,7 @@ function updateDepthScene(timestamp) {
   const now = timestamp || performance.now();
   const delta = lastDepthFrameTime ? Math.min(now - lastDepthFrameTime, 64) : 16;
   lastDepthFrameTime = now;
-  const follow = 1 - Math.exp(-delta / 185);
+  const follow = 1 - Math.exp(-delta / 260);
   const viewportHeight = window.innerHeight || 1;
   const compact = window.innerWidth < 760;
   let moving = false;
