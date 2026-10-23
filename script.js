@@ -6,6 +6,8 @@ const sceneName = document.querySelector("[data-scene-name]");
 const progressBar = document.querySelector(".scene-progress span");
 const particleCanvas = document.querySelector(".particle-field");
 const particleContext = particleCanvas?.getContext("2d");
+const scanCanvas = document.querySelector(".scan-cloud");
+const scanContext = scanCanvas?.getContext("2d");
 const sceneNames = [
   "ТЕХНИЧЕСКОЕ ОБСЛЕДОВАНИЕ СПУ",
   "ДИАГНОСТИКА / ИЗМЕРЕНИЯ",
@@ -41,7 +43,10 @@ let lastMotionTime = 0;
 let particleFrame = 0;
 let canvasWidth = 0;
 let canvasHeight = 0;
+let scanWidth = 0;
+let scanHeight = 0;
 let particles = [];
+let scanPoints = [];
 let pointerX = 0;
 let pointerY = 0;
 let pointerTargetX = 0;
@@ -98,7 +103,10 @@ function applyMotionFrame(progress) {
   stage.style.setProperty("--model-rotate-z", `${blend("z").toFixed(2)}deg`);
   stage.style.setProperty("--model-scale", Math.min(1.12, Math.max(0.35, blend("scale"))).toFixed(3));
   stage.style.setProperty("--model-lift", `${blend("lift").toFixed(2)}px`);
-  stage.style.setProperty("--model-opacity", clamp01(blend("opacity")).toFixed(3));
+  const storyPosition = progress * frames.length;
+  const scanFocus = smoothstep(1.08, 1.3, storyPosition) * (1 - smoothstep(1.72, 1.94, storyPosition));
+  stage.style.setProperty("--scan-focus", scanFocus.toFixed(3));
+  stage.style.setProperty("--model-opacity", (clamp01(blend("opacity")) * (1 - scanFocus)).toFixed(3));
   stage.style.setProperty("--camera-x", `${blend("cameraX").toFixed(2)}px`);
   stage.style.setProperty("--camera-y", `${blend("cameraY").toFixed(2)}px`);
   stage.style.setProperty("--camera-scale", blend("cameraScale").toFixed(3));
@@ -115,7 +123,10 @@ function updateStory() {
   targetProgress = clamp01((window.scrollY - storyTop) / travel);
   if (prefersReducedMotion.matches) scrollProgress = targetProgress;
   renderStoryProgress();
-  if (prefersReducedMotion.matches) drawParticles(0);
+  if (prefersReducedMotion.matches) {
+    drawParticles(0);
+    drawScanCloud(0);
+  }
 }
 
 function renderStoryProgress() {
@@ -195,6 +206,112 @@ function createParticles() {
       orbit: (random() - 0.5) * 0.09,
     };
   });
+  resizeScanCanvas();
+}
+
+function resizeScanCanvas() {
+  if (!scanCanvas || !scanContext) return;
+  const bounds = scanCanvas.getBoundingClientRect();
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  scanWidth = bounds.width;
+  scanHeight = bounds.height;
+  scanCanvas.width = Math.round(scanWidth * ratio);
+  scanCanvas.height = Math.round(scanHeight * ratio);
+  scanContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+}
+
+function createScanPoints() {
+  let seed = 8431;
+  const random = () => {
+    seed = (seed * 16807) % 2147483647;
+    return (seed - 1) / 2147483646;
+  };
+  const points = [];
+  const add = (x, y, z, surface = 0) => points.push({
+    x: x + (random() - 0.5) * 0.012,
+    y: y + (random() - 0.5) * 0.012,
+    z: z + (random() - 0.5) * 0.012,
+    surface,
+    size: 0.55 + random() * 0.85,
+    phase: random() * Math.PI * 2,
+  });
+
+  for (let x = -1; x <= 1.001; x += 0.045) {
+    for (let y = 0.05; y <= 1.001; y += 0.045) {
+      const windowBand = y > 0.3 && y < 0.72;
+      const windowZone = Math.abs(x) < 0.76 && Math.floor((x + 0.76) / 0.2) % 3 !== 2;
+      if (!(windowBand && windowZone)) add(x, y, 0.68, 0);
+      add(x, y, -0.68, 1);
+    }
+  }
+
+  for (let z = -0.68; z <= 0.681; z += 0.045) {
+    for (let y = 0.05; y <= 1.001; y += 0.045) {
+      add(-1, y, z, 1);
+      add(1, y, z, 1);
+    }
+    for (let x = -1; x <= 1.001; x += 0.045) {
+      add(x, 0.04, z, 2);
+      const roof = 1.04 + (1 - Math.abs(x)) * 0.28;
+      add(x, roof, z, 2);
+    }
+  }
+
+  for (let beam = -0.85; beam <= 0.851; beam += 0.28) {
+    for (let y = 0.08; y <= 1.2; y += 0.035) {
+      add(beam, y, 0.694, 2);
+      add(beam, y, -0.694, 2);
+    }
+  }
+  scanPoints = points;
+}
+
+function drawScanCloud(time) {
+  if (!scanContext || !scanWidth || !scanHeight) return;
+  const context = scanContext;
+  const storyPosition = scrollProgress * frames.length;
+  const focus = smoothstep(1.04, 1.25, storyPosition) * (1 - smoothstep(1.75, 1.96, storyPosition));
+  context.clearRect(0, 0, scanWidth, scanHeight);
+  if (focus <= 0.002 || scanPoints.length === 0) return;
+
+  const centerX = scanWidth * 0.52;
+  const centerY = scanHeight * 0.54;
+  const scale = Math.min(scanWidth * 0.38, scanHeight * 0.39);
+  const yaw = 0.28 + Math.sin(time * 0.0002) * 0.11 + (storyPosition - 1.5) * 0.23;
+  const pitch = -0.16;
+  const cosYaw = Math.cos(yaw);
+  const sinYaw = Math.sin(yaw);
+  const cosPitch = Math.cos(pitch);
+  const sinPitch = Math.sin(pitch);
+  const scanLine = (time * 0.00022) % 1;
+
+  context.globalAlpha = focus * 0.32;
+  context.strokeStyle = "rgba(189,218,229,.55)";
+  context.lineWidth = 0.7;
+  context.beginPath();
+  context.ellipse(centerX, centerY + scale * 0.24, scale * 1.05, scale * 0.24, -0.12, 0, Math.PI * 2);
+  context.stroke();
+
+  scanPoints.forEach((point) => {
+    const rotatedX = point.x * cosYaw + point.z * sinYaw;
+    const rotatedZ = -point.x * sinYaw + point.z * cosYaw;
+    const rotatedY = point.y * cosPitch - rotatedZ * sinPitch;
+    const depth = point.y * sinPitch + rotatedZ * cosPitch;
+    const perspective = 1 / (1.65 + depth * 0.22);
+    const x = centerX + rotatedX * scale * perspective;
+    const y = centerY - (rotatedY - 0.56) * scale * perspective;
+    const scanDistance = Math.abs((point.y / 1.4) - scanLine);
+    const scanPulse = scanDistance < 0.035 ? (1 - scanDistance / 0.035) : 0;
+    const shimmer = 0.68 + Math.sin(time * 0.001 + point.phase) * 0.12;
+    const alpha = focus * (shimmer + scanPulse * 0.28);
+    const color = point.surface === 2 ? "249,187,79" : point.surface === 1 ? "152,145,255" : "158,222,222";
+    context.globalAlpha = alpha;
+    context.fillStyle = `rgb(${color})`;
+    context.beginPath();
+    context.arc(x, y, point.size * (1 + scanPulse * 0.7), 0, Math.PI * 2);
+    context.fill();
+  });
+  context.globalAlpha = 1;
 }
 
 function drawParticles(time) {
@@ -269,6 +386,7 @@ function animateParticles(time) {
   stage?.style.setProperty("--pointer-tilt-x", `${(pointerX * -0.12).toFixed(2)}deg`);
   stage?.style.setProperty("--pointer-tilt-y", `${(pointerY * 0.12).toFixed(2)}deg`);
   drawParticles(time);
+  drawScanCloud(time);
   if (!prefersReducedMotion.matches && !document.hidden) {
     particleFrame = window.requestAnimationFrame(animateParticles);
   }
@@ -282,6 +400,7 @@ function syncAmbientMotion() {
     if (prefersReducedMotion.matches) {
       renderStoryProgress();
       drawParticles(0);
+      drawScanCloud(0);
     }
     return;
   }
@@ -311,8 +430,10 @@ document.addEventListener("visibilitychange", syncAmbientMotion);
 
 updateStory();
 createParticles();
+createScanPoints();
 if (!prefersReducedMotion.matches) {
   syncAmbientMotion();
 } else {
   drawParticles(0);
+  drawScanCloud(0);
 }
