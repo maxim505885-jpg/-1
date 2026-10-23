@@ -211,3 +211,84 @@ body,.story,.site-footer{background:var(--void)}
 @keyframes spu-results-out{to{opacity:0;transform:translateY(6px) scale(.995)}}
 @keyframes spu-results-in{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){::view-transition-old(spu-project-results),::view-transition-new(spu-project-results){animation-duration:.01ms!important}}
+
+/* Consistent typography scale: keep technical detail readable at every viewport. */
+:root{
+  --type-micro:clamp(10px,.62rem + .1vw,12px);
+  --type-label:clamp(11px,.68rem + .12vw,13px);
+  --type-body:clamp(15px,.91rem + .12vw,17px);
+  --type-card:clamp(14px,.84rem + .12vw,16px);
+  --type-small:clamp(12px,.75rem + .08vw,14px);
+}
+body{font-size:var(--type-body)}
+.top-nav,.corner-contact{font-size:var(--type-micro);letter-spacing:.07em}
+.micro-label,.section-kicker,.frame-index,.frame-readout,.hero-edition,.scene-status,.scene-counter,.scene-coordinates,.scroll-prompt,.service-no,.service-note,.portfolio-source,.project-tag,.project-info i,.about-quote span,.about-badges a,.about-numbers>small,.contact-details>a span,.contact-details>small,.footer-origin,.known-object-tags span,.deliverable-row>span,.object-meta small,.scan-label,.scan-caption,.contact-block p{font-size:var(--type-micro);letter-spacing:.06em}
+.hero-caption .micro-label{font-size:var(--type-label);letter-spacing:.1em}
+.hero-description,.section-heading>p,.process-heading>p,.service-card p,.about-story>p,.contact-block p{font-size:var(--type-body);line-height:1.7}
+.service-card ul{font-size:var(--type-small);line-height:1.6}
+.service-card h3{font-size:clamp(21px,1.65vw,25px)}
+.process-step h3{font-size:clamp(20px,1.7vw,25px)}
+.process-step p,.project-info small,.stat-row span{font-size:var(--type-card);line-height:1.65}
+.project-info strong{font-size:clamp(21px,2.5vw,32px)}
+.project-tag{padding:8px 10px}
+.about-badges a{font-size:var(--type-small);letter-spacing:.015em}
+.contact-details>a{font-size:var(--type-body)}
+.footer-links,.site-footer{font-size:var(--type-micro)}
+.service-note,.portfolio-source,.deliverable-row>span{letter-spacing:.035em}
+.object-list a{grid-template-columns:78px minmax(0,1fr) 20px;gap:12px;min-height:84px;padding:10px 0}
+.object-list a img{width:78px;height:56px}
+.object-meta strong{font-size:var(--type-small)}
+.object-meta small{font-size:var(--type-micro);letter-spacing:0}
+.scan-label,.scan-caption{font-size:var(--type-micro);letter-spacing:.04em}
+.hero-edition{font-size:var(--type-micro);letter-spacing:.06em}
+.portfolio-filters button{font-size:var(--type-small)}
+.portfolio-count{font-size:var(--type-micro)}
+@media(max-width:760px){
+  .corner-header{top:14px;left:18px;right:18px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;row-gap:16px}
+  .top-nav{position:static;grid-column:1/-1;grid-row:2;display:flex;gap:clamp(12px,4vw,20px);margin:0;padding:0 0 7px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;font-size:10px;letter-spacing:.045em}
+  .top-nav::-webkit-scrollbar{display:none}
+  .corner-contact{font-size:10px}
+  .hero-caption .micro-label{font-size:10px;margin-bottom:12px}
+  .hero-description{font-size:15px;line-height:1.6}
+  .hero-action-primary,.hero-action-secondary{font-size:12px}
+  .hero-edition{font-size:10px;max-width:44%;line-height:1.5}
+  .scroll-prompt{font-size:10px}
+  .section-kicker{font-size:11px}
+  .section-heading>p,.process-heading>p{font-size:15px;line-height:1.65}
+  .service-card h3,.process-step h3{font-size:20px}
+  .service-card p,.about-story>p{font-size:14px;line-height:1.65}
+  .service-card ul,.service-no,.service-note{font-size:12px}
+  .service-note{line-height:1.55}
+  .process-step p{font-size:14px;line-height:1.6}
+  .process-no{font-size:12px}
+  .deliverable-row>span{font-size:10px}
+  .deliverable-row strong{font-size:12px}
+  .project-tag{font-size:10px;padding:7px 8px}
+  .project-info strong{font-size:clamp(20px,5.8vw,25px)}
+  .project-info small{font-size:13px;line-height:1.45}
+  .project-info i,.portfolio-source,.portfolio-count{font-size:10px}
+  .portfolio-filters button{font-size:11px}
+  .about-quote span,.about-badges a,.about-numbers>small{font-size:11px}
+  .stat-row span{font-size:13px}
+  .contact-details>a{font-size:15px}
+  .contact-details>a span,.contact-details>small,.site-footer,.footer-origin{font-size:11px}
+  .object-list a{grid-template-columns:64px minmax(0,1fr) 14px;min-height:68px;padding:7px 0;gap:8px}
+  .object-list a img{width:64px;height:46px}
+  .object-meta strong{font-size:12px;white-space:normal}
+  .object-meta small{font-size:10px;white-space:normal}
+  .scan-label,.scan-caption{font-size:10px;letter-spacing:.025em}
+  .contact-block p{font-size:14px;line-height:1.6}
+}
+@media(max-width:420px){
+  .corner-header{left:15px;right:15px;row-gap:13px}
+  .top-nav{gap:12px;font-size:9px}
+  .corner-contact{font-size:9px}
+  .hero-caption{bottom:15%}
+  .hero-caption h1{font-size:clamp(41px,11vw,50px)}
+  .hero-description{font-size:14px}
+  .hero-edition{font-size:9px}
+  .portfolio-filters button{padding:0 9px;font-size:10px}
+  .process-step{padding:16px 11px}
+  .process-step h3{font-size:18px}
+  .process-step p{font-size:13px}
+}
