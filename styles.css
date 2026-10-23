@@ -98,3 +98,39 @@ body,.story,.site-footer{background:var(--void)}
 
 /* Keep the hero scan readable as a real structure instead of a bright sliver. */
 .scene-specimen img{mix-blend-mode:normal;filter:grayscale(.16) saturate(.72) contrast(1.04) drop-shadow(0 24px 56px rgba(0,0,0,.42));-webkit-mask-image:radial-gradient(ellipse 76% 72% at 50% 50%,#000 64%,transparent 100%);mask-image:radial-gradient(ellipse 76% 72% at 50% 50%,#000 64%,transparent 100%)}.particle-field{opacity:.62}
+
+/* Clear engineering identity: replace the abstract CGI opener with an inspection scene. */
+.scene-landscape{background-image:url("assets/hero-inspection.png");background-position:center center;filter:saturate(.78) contrast(1.06)}
+.scene-haze{background:linear-gradient(90deg,rgba(4,5,7,.88) 0%,rgba(4,5,7,.75) 29%,rgba(4,5,7,.38) 51%,rgba(4,5,7,.06) 78%),linear-gradient(180deg,rgba(4,5,7,.4),transparent 24%,transparent 64%,rgba(4,5,7,.66));mix-blend-mode:normal}
+.scene-vignette{background:radial-gradient(ellipse at 72% 45%,transparent 22%,rgba(4,5,7,.16) 72%,rgba(4,5,7,.52) 100%),linear-gradient(180deg,rgba(4,5,7,.15),transparent 20%,transparent 62%,rgba(4,5,7,.56))}
+.scene-grid,.scene-specimen,.scene-crosshair{display:none!important}
+.particle-field{opacity:.2;mix-blend-mode:screen}
+.manifesto{display:none}
+.hero-caption{left:clamp(28px,7vw,112px);bottom:19%;width:min(620px,54vw);max-width:none}
+.hero-caption .micro-label{font-size:10px;letter-spacing:.14em;margin-bottom:17px;color:#ffc24b}
+.hero-caption h1{font-size:clamp(58px,7.1vw,94px);line-height:.96;letter-spacing:-.075em;font-weight:500;max-width:700px}
+.hero-caption h1:after{display:none}
+.hero-description{max-width:500px;margin:21px 0 24px;color:rgba(255,255,255,.84);font-family:var(--sans);font-size:15px;line-height:1.65;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.hero-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.hero-action-primary,.hero-action-secondary{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:48px;padding:0 18px;font-family:var(--sans);font-size:12px;transition:transform .25s ease,background .25s ease,border-color .25s ease}
+.hero-action-primary{background:#ffb829;color:#191714;font-weight:600}
+.hero-action-primary span{font-size:16px}
+.hero-action-primary:hover{transform:translateY(-3px);background:#ffd16e}
+.hero-action-secondary{border:1px solid rgba(255,255,255,.48);color:#fff}
+.hero-action-secondary:hover{transform:translateY(-3px);border-color:#fff;background:rgba(255,255,255,.08)}
+.hero-edition{font-size:8px;letter-spacing:.12em;color:rgba(255,255,255,.74)}
+.corner-header{align-items:center}
+.top-nav{font-size:9px;gap:clamp(18px,2.5vw,34px)}
+.corner-contact{font-size:9px}
+@media(max-width:760px){
+ .scene-landscape{background-position:65% center;filter:saturate(.72) contrast(1.04)}
+ .scene-haze{background:linear-gradient(90deg,rgba(4,5,7,.77),rgba(4,5,7,.42) 55%,rgba(4,5,7,.15)),linear-gradient(180deg,rgba(4,5,7,.42),transparent 28%,rgba(4,5,7,.12) 58%,rgba(4,5,7,.72))}
+ .hero-caption{left:22px;right:22px;bottom:17%;width:auto;max-width:520px}
+ .hero-caption .micro-label{font-size:8px;margin-bottom:12px}
+ .hero-caption h1{font-size:clamp(43px,11.2vw,64px);line-height:.98}
+ .hero-description{font-size:12px;line-height:1.55;margin:14px 0 17px;max-width:430px}
+ .hero-actions{gap:10px}
+ .hero-action-primary,.hero-action-secondary{min-height:43px;padding:0 12px;font-size:10px;gap:10px}
+ .hero-edition{right:22px;bottom:4%;max-width:48%;text-align:right;font-size:5.5px;line-height:1.5}
+ .scroll-prompt{left:22px;bottom:4%}
+}
