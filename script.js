@@ -1,87 +1,54 @@
-const menuButton = document.querySelector(".menu-toggle");
-const siteNav = document.querySelector(".nav");
-
-menuButton?.addEventListener("click", () => {
-  const expanded = menuButton.getAttribute("aria-expanded") === "true";
-  menuButton.setAttribute("aria-expanded", String(!expanded));
-  siteNav?.classList.toggle("is-open", !expanded);
-});
-
-siteNav?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    menuButton?.setAttribute("aria-expanded", "false");
-    siteNav.classList.remove("is-open");
-  });
-});
-
-const revealItems = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver((entries, currentObserver) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        currentObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  revealItems.forEach((item) => observer.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add("is-visible"));
-}
-
-const projectTrack = document.querySelector(".project-track");
-document.querySelectorAll(".carousel-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (!projectTrack) return;
-    const card = projectTrack.querySelector(".project-card");
-    const gap = Number.parseFloat(getComputedStyle(projectTrack).columnGap) || 0;
-    const distance = (card?.getBoundingClientRect().width || projectTrack.clientWidth * 0.84) + gap;
-    projectTrack.scrollBy({
-      left: button.dataset.direction === "next" ? distance : -distance,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-    });
-  });
-});
-
-const heroScene = document.querySelector(".hero-art");
-const scrollModel = document.querySelector(".scroll-model");
-const projectScenes = document.querySelectorAll(".project-image");
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-let scrollFramePending = false;
+const story = document.querySelector(".story");
+const stage = document.querySelector(".story-stage");
+const frames = [...document.querySelectorAll(".story-frame")];
+const currentFrame = document.querySelector("[data-current-frame]");
+const sceneName = document.querySelector("[data-scene-name]");
+const progressBar = document.querySelector(".scene-progress span");
+const sceneNames = [
+  "АРКТИЧЕСКАЯ СЦЕНА / СПУ",
+  "ИССЛЕДОВАНИЕ / 3D",
+  "ЭКСПЕРТИЗА / РАСЧЁТ",
+  "ИЗБРАННЫЕ ОБЪЕКТЫ",
+  "ОПЫТ / С 2000 ГОДА",
+  "СЛЕДУЮЩИЙ ШАГ",
+];
+let framePending = false;
+let previousIndex = -1;
 
 function clamp01(value) {
   return Math.min(1, Math.max(0, value));
 }
 
-function updateScrollDepth() {
-  scrollFramePending = false;
-  if (reduceMotion.matches) return;
+function updateStory() {
+  framePending = false;
+  if (!story || !stage || frames.length === 0) return;
 
-  if (heroScene) {
-    const heroHeight = heroScene.closest(".hero")?.offsetHeight || window.innerHeight;
-    heroScene.style.setProperty("--hero-progress", clamp01(window.scrollY / (heroHeight * 0.9)).toFixed(3));
+  const storyTop = story.getBoundingClientRect().top + window.scrollY;
+  const travel = Math.max(story.offsetHeight - window.innerHeight, 1);
+  const progress = clamp01((window.scrollY - storyTop) / travel);
+  const index = Math.min(frames.length - 1, Math.floor(progress * frames.length));
+
+  stage.style.setProperty("--scroll-progress", progress.toFixed(3));
+  if (progressBar) progressBar.style.width = `${(progress * 100).toFixed(1)}%`;
+  if (index !== previousIndex) {
+    frames.forEach((frame, frameIndex) => {
+      const active = frameIndex === index;
+      frame.classList.toggle("is-active", active);
+      frame.inert = !active;
+      frame.setAttribute("aria-hidden", String(!active));
+    });
+    if (currentFrame) currentFrame.textContent = String(index).padStart(2, "0");
+    if (sceneName) sceneName.textContent = sceneNames[index] || "СПУ / ИНЖЕНЕРНОЕ БЮРО";
+    previousIndex = index;
   }
-
-  if (scrollModel) {
-    const rect = scrollModel.getBoundingClientRect();
-    const progress = clamp01((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
-    scrollModel.style.setProperty("--model-progress", progress.toFixed(3));
-  }
-
-  projectScenes.forEach((scene) => {
-    const rect = scene.getBoundingClientRect();
-    const progress = clamp01((window.innerHeight * 0.9 - rect.top) / (window.innerHeight * 0.85));
-    scene.style.setProperty("--card-progress", progress.toFixed(3));
-  });
 }
 
-function requestScrollDepthUpdate() {
-  if (scrollFramePending) return;
-  scrollFramePending = true;
-  window.requestAnimationFrame(updateScrollDepth);
+function requestStoryUpdate() {
+  if (framePending) return;
+  framePending = true;
+  window.requestAnimationFrame(updateStory);
 }
 
-window.addEventListener("scroll", requestScrollDepthUpdate, { passive: true });
-window.addEventListener("resize", requestScrollDepthUpdate);
-reduceMotion.addEventListener?.("change", requestScrollDepthUpdate);
-updateScrollDepth();
+window.addEventListener("scroll", requestStoryUpdate, { passive: true });
+window.addEventListener("resize", requestStoryUpdate);
+updateStory();
