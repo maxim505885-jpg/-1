@@ -14,7 +14,7 @@ const sceneNames = [
   "ОПЫТ / С 2000 ГОДА",
   "СЛЕДУЮЩИЙ ШАГ",
 ];
-const motionFrames = [
+const motionGuideFrames = [
   { at: 0, x: 12, y: -38, z: -7, scale: 0.35, lift: 85, opacity: 0.04, cameraX: 0, cameraY: 0, cameraScale: 1.03, ring: 0, grid: 0 },
   { at: 0.08, x: 4, y: -5, z: -4, scale: 0.62, lift: 55, opacity: 0.62, cameraX: -12, cameraY: 4, cameraScale: 1.05, ring: 22, grid: -2 },
   { at: 0.16, x: -9, y: 32, z: 4, scale: 0.96, lift: 16, opacity: 0.9, cameraX: -36, cameraY: 12, cameraScale: 1.08, ring: 50, grid: 4 },
@@ -29,6 +29,7 @@ const motionFrames = [
   { at: 0.9, x: 8, y: 560, z: 12, scale: 1.12, lift: 48, opacity: 0.62, cameraX: 20, cameraY: 10, cameraScale: 1.12, ring: 475, grid: 5 },
   { at: 1, x: 0, y: 615, z: 0, scale: 0.55, lift: 95, opacity: 0.04, cameraX: 0, cameraY: 0, cameraScale: 1.08, ring: 540, grid: 0 },
 ];
+const motionFrames = Array.from({ length: 100 }, (_, index) => sampleMotionGuide(index / 99));
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const particleColors = ["#8052ff", "#ffb829", "#15846e", "#b49aff", "#7d8dff"];
@@ -48,6 +49,32 @@ function clamp01(value) {
   return Math.min(1, Math.max(0, value));
 }
 
+function sampleMotionGuide(progress) {
+  let nextIndex = motionGuideFrames.findIndex((frame) => frame.at >= progress);
+  if (nextIndex < 1) nextIndex = 1;
+  if (nextIndex < 0) nextIndex = motionGuideFrames.length - 1;
+
+  const start = motionGuideFrames[nextIndex - 1];
+  const end = motionGuideFrames[nextIndex];
+  const previous = motionGuideFrames[Math.max(0, nextIndex - 2)];
+  const following = motionGuideFrames[Math.min(motionGuideFrames.length - 1, nextIndex + 1)];
+  const t = clamp01((progress - start.at) / (end.at - start.at));
+  const t2 = t * t;
+  const t3 = t2 * t;
+  const sampled = { at: progress };
+
+  Object.keys(start).forEach((key) => {
+    if (key === "at") return;
+    sampled[key] = 0.5 * (
+      2 * start[key]
+      + (-previous[key] + end[key]) * t
+      + (2 * previous[key] - 5 * start[key] + 4 * end[key] - following[key]) * t2
+      + (-previous[key] + 3 * start[key] - 3 * end[key] + following[key]) * t3
+    );
+  });
+  return sampled;
+}
+
 function applyMotionFrame(progress) {
   if (!stage) return;
   let nextIndex = motionFrames.findIndex((frame) => frame.at >= progress);
@@ -56,20 +83,8 @@ function applyMotionFrame(progress) {
 
   const start = motionFrames[nextIndex - 1];
   const end = motionFrames[nextIndex];
-  const previous = motionFrames[Math.max(0, nextIndex - 2)];
-  const following = motionFrames[Math.min(motionFrames.length - 1, nextIndex + 1)];
   const localProgress = clamp01((progress - start.at) / (end.at - start.at));
-  const blend = (key) => {
-    const t = localProgress;
-    const t2 = t * t;
-    const t3 = t2 * t;
-    return 0.5 * (
-      2 * start[key]
-      + (-previous[key] + end[key]) * t
-      + (2 * previous[key] - 5 * start[key] + 4 * end[key] - following[key]) * t2
-      + (-previous[key] + 3 * start[key] - 3 * end[key] + following[key]) * t3
-    );
-  };
+  const blend = (key) => start[key] + (end[key] - start[key]) * localProgress;
 
   stage.style.setProperty("--model-rotate-x", `${blend("x").toFixed(2)}deg`);
   stage.style.setProperty("--model-rotate-y", `${blend("y").toFixed(2)}deg`);
