@@ -66,3 +66,8 @@ body,.story,.site-footer{background:var(--void)}
 .motion-paused .scene-specimen{animation-play-state:paused}
 @media(max-width:760px){.scene-landscape{transform:translate3d(var(--camera-x),var(--camera-y),0) scale(var(--camera-scale));transform-origin:58% 52%}.scene-specimen{width:68vw;height:66vh;transform:translate3d(calc(-50% + var(--pointer-x)*.36),calc(-50% + var(--model-lift) + var(--pointer-y)*.3),0) perspective(950px) rotateX(calc(var(--model-rotate-x) + var(--pointer-tilt-y))) rotateY(calc(var(--model-rotate-y) + var(--pointer-tilt-x))) rotateZ(var(--model-rotate-z)) scale(var(--model-scale))}.scene-crosshair{transform:translate(calc(-50% + var(--pointer-x)*.3),calc(-50% + var(--pointer-y)*.3)) rotateX(67deg) rotateZ(calc(-14deg + var(--ring-rotation)))}}
 .scene-progress{background:repeating-linear-gradient(90deg,rgba(255,255,255,.17) 0 1px,rgba(255,255,255,.045) 1px 2.5px)}
+.story-frame{transition:none}
+.story-frame>.manifesto,.story-frame>.hero-caption,.story-frame>.scroll-prompt,.story-frame>.hero-edition,.story-frame>.frame-index,.story-frame>.frame-copy,.story-frame>.frame-readout,.story-frame>.frame-cross-line,.story-frame>.method-tags,.story-frame>.object-list,.story-frame>.experience-readouts,.story-frame>.contact-block,.story-frame>.contact-address{opacity:1!important;transform:none!important;transition:none!important}
+.story-frame>.frame-cross-line{transform:rotate(31deg)!important}
+.scene-progress span{width:100%;transform:scaleX(var(--progress,0));transform-origin:left center;transition:none}
+.story-frame>.frame-index{opacity:var(--frame-index-opacity,1)!important}

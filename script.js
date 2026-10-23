@@ -36,6 +36,8 @@ const particleColors = ["#8052ff", "#ffb829", "#15846e", "#b49aff", "#7d8dff"];
 let framePending = false;
 let previousIndex = -1;
 let scrollProgress = 0;
+let targetProgress = 0;
+let lastMotionTime = 0;
 let particleFrame = 0;
 let canvasWidth = 0;
 let canvasHeight = 0;
@@ -47,6 +49,11 @@ let pointerTargetY = 0;
 
 function clamp01(value) {
   return Math.min(1, Math.max(0, value));
+}
+
+function smoothstep(edge0, edge1, value) {
+  const progress = clamp01((value - edge0) / (edge1 - edge0));
+  return progress * progress * (3 - 2 * progress);
 }
 
 function sampleMotionGuide(progress) {
@@ -105,18 +112,40 @@ function updateStory() {
 
   const storyTop = story.getBoundingClientRect().top + window.scrollY;
   const travel = Math.max(story.offsetHeight - window.innerHeight, 1);
-  scrollProgress = clamp01((window.scrollY - storyTop) / travel);
-  applyMotionFrame(scrollProgress);
-  const index = Math.min(frames.length - 1, Math.floor(scrollProgress * frames.length));
+  targetProgress = clamp01((window.scrollY - storyTop) / travel);
+  if (prefersReducedMotion.matches) scrollProgress = targetProgress;
+  renderStoryProgress();
+  if (prefersReducedMotion.matches) drawParticles(0);
+}
 
+function renderStoryProgress() {
+  if (!stage || frames.length === 0) return;
+  const index = Math.min(frames.length - 1, Math.floor(scrollProgress * frames.length));
   stage.style.setProperty("--scroll-progress", scrollProgress.toFixed(3));
-  if (progressBar) progressBar.style.width = `${(scrollProgress * 100).toFixed(1)}%`;
+  applyMotionFrame(scrollProgress);
+  if (progressBar) progressBar.style.setProperty("--progress", scrollProgress.toFixed(4));
+
+  const chapterPosition = scrollProgress * frames.length;
+  frames.forEach((frame, frameIndex) => {
+    const local = chapterPosition - frameIndex;
+    const fadeIn = frameIndex === 0 ? 1 : smoothstep(0, 0.06, local);
+    const fadeOut = frameIndex === frames.length - 1 ? 1 : 1 - smoothstep(0.94, 1, local);
+    const opacity = fadeIn * fadeOut;
+    frame.style.opacity = opacity.toFixed(3);
+    frame.style.transform = prefersReducedMotion.matches
+      ? "none"
+      : `translate3d(0, ${(1 - opacity) * 12}px, 0) scale(${(0.99 + opacity * 0.01).toFixed(4)})`;
+    const isVisible = opacity > 0.005;
+    if (frame.classList.contains("is-visible") !== isVisible) frame.classList.toggle("is-visible", isVisible);
+  });
+
   if (index !== previousIndex) {
     frames.forEach((frame, frameIndex) => {
       const active = frameIndex === index;
       frame.classList.toggle("is-active", active);
       frame.inert = !active;
       frame.setAttribute("aria-hidden", String(!active));
+      frame.style.setProperty("--frame-index-opacity", active ? "1" : "0");
     });
     if (currentFrame) currentFrame.textContent = String(index + 1).padStart(2, "0");
     if (sceneName) sceneName.textContent = sceneNames[index] || "СПУ / ИНЖЕНЕРНОЕ БЮРО";
@@ -225,6 +254,14 @@ function drawParticles(time) {
 
 function animateParticles(time) {
   particleFrame = 0;
+  const delta = lastMotionTime ? Math.min(time - lastMotionTime, 64) : 16;
+  lastMotionTime = time;
+  if (Math.abs(targetProgress - scrollProgress) > 0.0002) {
+    const follow = 1 - Math.exp(-delta / 185);
+    scrollProgress += (targetProgress - scrollProgress) * follow;
+    if (Math.abs(targetProgress - scrollProgress) < 0.0002) scrollProgress = targetProgress;
+    renderStoryProgress();
+  }
   pointerX += (pointerTargetX - pointerX) * 0.075;
   pointerY += (pointerTargetY - pointerY) * 0.075;
   stage?.style.setProperty("--pointer-x", `${pointerX.toFixed(2)}px`);
@@ -242,7 +279,10 @@ function syncAmbientMotion() {
   if (prefersReducedMotion.matches || document.hidden) {
     if (particleFrame) window.cancelAnimationFrame(particleFrame);
     particleFrame = 0;
-    if (prefersReducedMotion.matches) drawParticles(0);
+    if (prefersReducedMotion.matches) {
+      renderStoryProgress();
+      drawParticles(0);
+    }
     return;
   }
   if (!particleFrame) particleFrame = window.requestAnimationFrame(animateParticles);
