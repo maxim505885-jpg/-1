@@ -416,11 +416,12 @@ let depthFramePending = false;
 function updateDepthScene() {
   depthFramePending = false;
   const viewportHeight = window.innerHeight || 1;
+  const compact = window.innerWidth < 760;
   depthSections.forEach((section) => {
     const bounds = section.getBoundingClientRect();
     const progress = clamp01((viewportHeight - bounds.top) / (viewportHeight + bounds.height));
-    const drift = (progress - 0.5) * -58;
-    const tilt = (0.5 - progress) * 2.4;
+    const drift = (progress - 0.5) * (compact ? -100 : -158);
+    const tilt = (0.5 - progress) * (compact ? 5.2 : 7.4);
     section.style.setProperty("--section-scroll", progress.toFixed(3));
     section.style.setProperty("--section-drift", `${drift.toFixed(1)}px`);
     section.style.setProperty("--section-drift-x", `${(drift * -1).toFixed(1)}px`);
@@ -429,12 +430,14 @@ function updateDepthScene() {
     section.style.setProperty("--section-tilt", `${tilt.toFixed(2)}deg`);
     section.style.setProperty("--section-tilt-inverse", `${(-tilt).toFixed(2)}deg`);
     section.style.setProperty("--section-tilt-double", `${(tilt * 2).toFixed(2)}deg`);
+    section.style.setProperty("--content-drift", `${((progress - 0.5) * (compact ? -64 : -112)).toFixed(1)}px`);
+    section.style.setProperty("--content-tilt", `${(tilt * 0.34).toFixed(2)}deg`);
   });
 
   depthItems.forEach((item) => {
     const bounds = item.getBoundingClientRect();
     const offset = clamp01((bounds.top + bounds.height / 2) / viewportHeight);
-    const parallax = (offset - 0.5) * -11;
+    const parallax = (offset - 0.5) * (compact ? -16 : -30);
     item.style.setProperty("--item-drift", `${parallax.toFixed(1)}px`);
     if (item.classList.contains("project-card")) {
       item.style.setProperty("--image-drift", `${(parallax * 1.35).toFixed(1)}px`);
@@ -466,8 +469,8 @@ function setupDepthExperience() {
       const bounds = item.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width - 0.5;
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-      item.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
-      item.style.setProperty("--tilt-y", `${(x * 8).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-x", `${(-y * 10).toFixed(2)}deg`);
+      item.style.setProperty("--tilt-y", `${(x * 12).toFixed(2)}deg`);
     });
     item.addEventListener("pointerleave", () => {
       item.style.setProperty("--tilt-x", "0deg");
